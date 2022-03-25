@@ -1,0 +1,172 @@
+.backgroud_image{
+    background-image: url(/assets/images/bg-fort-1.jpg);
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat;
+}
+
+.gradient-card{
+  width: 500px; 
+  margin-top: 4%;
+  background: linear-gradient(90deg, rgba(30,30,31,1) 0%, rgba(167,167,175,1) 64%, rgba(210,210,210,0.9643207624846813) 100%);
+}
+
+ngb-carousel {
+  max-width:10%; /*400px;*/
+  margin: auto;
+  /*margin-top: 2%;
+  margin: 50px auto;*/
+}
+ngb-carousel img {
+  width: 100%;
+  outline: none;
+}
+
+ngb-carousel {
+  width: inherit;
+  height: inherit;
+}
+.carousel-inner {
+  overflow: visible;
+}
+.carousel-item {
+  display: flex !important;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.2s ease-in-out, visibility 1.2s;
+  z-index: -1;
+}
+.carousel-item.active{
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
+}
+.carousel-control-prev {
+  /* z-index: 20;*/
+  left:-50px; }
+
+.carousel-control-next {
+  /* z-index: 20; right: -50px;*/
+  
+  right: -13% !important;
+}
+.carousel-indicators{
+  z-index: 20;
+}
+
+.carousel-control-next{
+  margin-left: 90px;
+}
+
+
+/* Extra small devices (phones,600px and down)
+
+≥768px */
+@media only screen and (max-width: 575px)  {
+  .col-12 {
+    max-width: 100%;
+    font-size: 85%;
+    margin-left:1%; 
+    margin-top: 15%;
+  }
+  p{
+    margin-left: 2em;
+    margin-right: 2em;
+    text-align: center;
+  }
+  button{
+    margin-left: 30%;
+    
+
+  }
+  
+  video {width: 70%; height:70%;
+  }
+}
+/* Small devices (portrait tablets and large phones) sm */
+/*@media only screen and (min-width: 576px)and (max-width: 767px) {
+  .col-sm-12 {
+    max-width: 100%;
+    font-size: 70%;
+    margin-left:1%; 
+    margin-top: 40%;
+  }
+  button{
+    margin-left: 30%;
+  }
+  video {width: 60%; height:60%;
+  }
+
+}*/
+
+
+/* Medium devices (landscape tablets, 768px and up) md*/
+@media only screen and (min-width: 768px) and (max-width:991px){
+
+  .col-md-6 {
+    max-width: 50%;
+    font-size: 150%;
+    margin-left:1%; 
+    margin-top: 10%;
+  }
+  p{
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  video {
+    width: 40%; height:40%;
+  }
+  button{
+    margin-left: 35%;
+    font-size: 100%;
+  }
+  
+
+} 
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+
+@media only screen and (min-width: 992px){
+
+  .col-lg-6{
+    font-size: 90%;
+    width: 50%;
+  
+    
+  }
+  p{
+    margin-left: 20%;
+  }
+  button{
+    margin-left: 45%;
+  }
+ 
+  video {
+    height:50%; 
+    width:50%;
+  }
+}
+/*xl*/
+/*@media only screen and (min-width: 1200px) and (max-width: 1400px){
+
+  .col-xl-6{
+    font-size: 90%;
+    /*width: 50%;
+    margin-left:15%; 
+    margin-top: 40%;
+  }
+  p{
+    margin-left: 1%;
+  }
+  button{
+    /*margin-left: 45%;
+  }
+ 
+  video {
+    height:45%; 
+    width:45%;
+  }
+}*/
