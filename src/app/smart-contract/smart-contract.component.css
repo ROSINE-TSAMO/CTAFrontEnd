@@ -64,11 +64,19 @@ ngb-carousel {
 
 ≥768px */
 @media only screen and (max-width: 575px)  {
+ 
   .col-12 {
     max-width: 100%;
     font-size: 85%;
     margin-left:1%; 
     margin-top: 15%;
+    
+
+  }
+
+  .mobile-display{
+    display:flex;
+    flex-direction: column-reverse;
   }
   p{
     margin-left: 2em;
@@ -77,8 +85,6 @@ ngb-carousel {
   }
   button{
     margin-left: 30%;
-    
-
   }
   
   video {width: 70%; height:70%;
@@ -106,7 +112,7 @@ ngb-carousel {
 
   .col-md-6 {
     max-width: 50%;
-    font-size: 150%;
+    font-size: 90%;
     margin-left:1%; 
     margin-top: 10%;
   }

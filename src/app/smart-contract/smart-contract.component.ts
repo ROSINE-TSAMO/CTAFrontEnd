@@ -38,7 +38,7 @@ export class SmartContractComponent implements OnInit {
   }
 
   async ngOnInit() {
-      //this.connectPolygon()
+      this.connectPolygon()
 
       //if variable localStorage is null, call the modal windows 
       if(localStorage.getItem('terminiCondizioni') == null){
@@ -76,6 +76,8 @@ export class SmartContractComponent implements OnInit {
       params: [{ ...networks["polygon"]}]
       });     
   }
+
+  //Communication between FE and samrt contract
   async smartContract(typeOfCard: any/*type of package as parameters*/){
     try{
       console.log("Name of card:",typeOfCard);
@@ -85,7 +87,7 @@ export class SmartContractComponent implements OnInit {
         const provider = new ethers.providers.Web3Provider(this.wallet);
         this.signer = provider.getSigner();
         let chainId= await this.signer.getChainId();
-        if(chainId !== 80001){
+        if(chainId !== 137 /*80001*/){
           console.log("Please change your network to polygon");  
         }
         else{

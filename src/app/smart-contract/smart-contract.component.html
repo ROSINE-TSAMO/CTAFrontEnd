@@ -8,8 +8,8 @@
   <div class="row">
     <ngb-carousel #c="ngbCarousel" [interval]=0  style="max-width:100%;">
       <ng-template ngbSlide id="bronze">
-        <div class="row align-items-center" style="margin-top:6%;">
-          <div class="col-12   col-lg-6">
+        <div class="row align-items-center mobile-display" style="margin-top:6%;">
+          <div class="col-12 col-md-6  col-lg-6">
                 <p class="text-justify text-white">
                     Atmosphere  Mantris is an ultra-connected futuristic world. The world evokes a relatively near future, with advanced 
                     technology but without post-futuristic disruption (meaning no wormholes or faster-than-light travel, no aliens or galactic 
@@ -20,7 +20,7 @@
                 </p>            
                 <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-dark">Mint this package</button>
           </div>
-          <div class="col-12   col-lg-6  text-center">
+          <div class="col-12  col-md-6  col-lg-6  text-center">
             <video  oncanplay="this.play()" onloadedmetadata="this.muted = true" autoplay="autoplay"  muted="muted" loop="loop">
               <source  [src]="videos[0]" type="video/mp4">
             </video>
@@ -31,7 +31,7 @@
     
 
       <ng-template ngbSlide id="silver">
-      <div class="row align-items-center" style="margin-top:6%;" >
+      <div class="row align-items-center mobile-display" style="margin-top:6%;" >
         <div class="col-12   col-lg-6">
           <p class="text-justify text-white">
               Atmosphere  Mantris is an ultra-connected futuristic world. The world evokes a relatively near future, with advanced 
@@ -52,7 +52,7 @@
     </ng-template>
 
     <ng-template ngbSlide id="gold">
-      <div class="row align-items-center" style="margin-top:6%;" >
+      <div class="row align-items-center mobile-display" style="margin-top:6%;" >
         <div class="col-12   col-lg-6">
           <p class="text-justify text-white">
               Atmosphere  Mantris is an ultra-connected futuristic world. The world evokes a relatively near future, with advanced 
