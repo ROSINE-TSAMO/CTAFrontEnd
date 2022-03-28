@@ -9,7 +9,7 @@
     <ngb-carousel #c="ngbCarousel" [interval]=0  style="max-width:100%;">
       <ng-template ngbSlide id="bronze">
         <div class="row align-items-center mobile-display" style="margin-top:6%;">
-          <div class="col-12 col-md-6  col-lg-6">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                 <h4  class="text-white text-center">Bronze Package</h4>
                 <p class="text-justify text-white">
                     Atmosphere  Mantris is an ultra-connected futuristic world. The world evokes a relatively near future, with advanced 
@@ -19,7 +19,7 @@
                 </p>            
                 <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-dark">Mint this package</button>
           </div>
-          <div class="col-12  col-md-6  col-lg-6  text-center">
+          <div class="col-12 col-sm-12  col-md-12 col-lg-6 text-center">
             <video  oncanplay="this.play()" onloadedmetadata="this.muted = true" autoplay="autoplay"  muted="muted" loop="loop">
               <source  [src]="videos[0]" type="video/mp4">
             </video>
@@ -29,7 +29,7 @@
 
       <ng-template ngbSlide id="silver">
       <div class="row align-items-center mobile-display" style="margin-top:6%;" >
-        <div class="col-12   col-lg-6">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
           <h4  class="text-white text-center">Silver Package</h4>
           <p class="text-justify text-white">
               Atmosphere  Mantris is an ultra-connected futuristic world. The world evokes a relatively near future, with advanced 
@@ -38,7 +38,7 @@
           </p>            
           <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-dark">Mint this package</button>
     </div>
-    <div class="col-12   col-lg-6  text-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6  text-center">
       <video  oncanplay="this.play()" onloadedmetadata="this.muted = true" autoplay="autoplay"  muted="muted" loop="loop">
         <source  [src]="videos[1]" type="video/mp4">
       </video>
@@ -48,7 +48,7 @@
 
     <ng-template ngbSlide id="gold">
       <div class="row align-items-center mobile-display" style="margin-top:6%;" >
-        <div class="col-12   col-lg-6">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
           <h4  class="text-white text-center">Gold Package</h4>
           <p class="text-justify text-white">
               Atmosphere  Mantris is an ultra-connected futuristic world. The world evokes a relatively near future, with advanced 
@@ -56,20 +56,19 @@
               empires, no spaceships and no diaspora of humanity).
           </p>            
           <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-dark">Mint this package</button>
-    </div>
-    <div class="col-12   col-lg-6  text-center">
+        </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6  text-center">
       <video  oncanplay="this.play()" onloadedmetadata="this.muted = true" autoplay="autoplay"  muted="muted" loop="loop">
         <source  [src]="videos[2]" type="video/mp4">
       </video>
     </div>
       </div>
     </ng-template>
-
   </ngb-carousel>
   </div>
   <footer>
     <div class="row text-center fixed-bottom">
-      <div class="col-12 text-center text-white">
+      <div class="text-center text-white">
         © 2022 Cross The Ages. All rights reserved.
       </div>
     </div>

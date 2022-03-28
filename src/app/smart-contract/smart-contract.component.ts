@@ -38,7 +38,7 @@ export class SmartContractComponent implements OnInit {
   }
 
   async ngOnInit() {
-      this.connectPolygon()
+      //this.connectPolygon()
 
       //if variable localStorage is null, call the modal windows 
       if(localStorage.getItem('terminiCondizioni') == null){

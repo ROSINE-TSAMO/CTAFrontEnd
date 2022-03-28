@@ -1,7 +1,8 @@
 .backgroud_image{
     background-image: url(/assets/images/bg-fort-1.jpg);
     background-size: cover;
-    width: 100%;
+    /*width: 100%;*/
+    width: 100vw;
     height: 100vh;
     background-repeat: no-repeat;
 }
@@ -60,18 +61,40 @@ ngb-carousel {
 }
 
 
-/* Extra small devices (phones,600px and down)
+/* Extra extreme small devices (phones,600px and down) */
+@media only screen and (max-width: 375px)  {
+   .col-12 {
+    max-width: 100%;
+    font-size: 70%;
+    margin-left:1%; 
+    margin-top: 2%; 
+  }
+  .mobile-display{
+    display:flex;
+    flex-direction: column-reverse;
+  }
+  p{
+    margin-left: 2em;
+    margin-right: 2em;
+    text-align: center;
+  }
+  button{
+    margin-left: 25%;
+  }
+  video {
+    width: 65%;
+    height:65%;
+  }
+}
+/* ----------- iPhone 4 and 4S ----------- */
 
-≥768px */
-@media only screen and (max-width: 575px)  {
- 
+/* Portrait and Landscape */
+@media only screen  and (min-device-width: 375px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
   .col-12 {
     max-width: 100%;
-    font-size: 85%;
+    font-size: 80%;
     margin-left:1%; 
-    margin-top: 15%;
-    
-
+    margin-top: 13%; 
   }
   .mobile-display{
     display:flex;
@@ -85,35 +108,57 @@ ngb-carousel {
   button{
     margin-left: 30%;
   }
-  
   video {width: 70%; height:70%;
   }
 }
+
+/* ----------- iPad 1, 2, Mini and Air ----------- */
+/* Portrait and Landscape */
+/*@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  .col-md-12 {
+    max-width: 50%;
+    font-size: 90%;
+    margin-left:1%; 
+    margin-top: 4%;
+  }
+  p{
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  video {
+    width: 40%; height:40%;
+  }
+  button{
+    margin-left: 35%;
+    font-size: 100%;
+  }
+
+}*/
+
 /* Small devices (portrait tablets and large phones) sm */
-/*@media only screen and (min-width: 576px)and (max-width: 767px) {
+@media only screen and (min-width: 576px)and (max-width: 768px) {
   .col-sm-12 {
     max-width: 100%;
-    font-size: 70%;
+    font-size: 80%;
     margin-left:1%; 
     margin-top: 40%;
   }
   button{
     margin-left: 30%;
   }
-  video {width: 60%; height:60%;
+  video {width: 70%; height:70%;
   }
+}
 
-}*/
 
-
-/* Medium devices (landscape tablets, 768px and up) md*/
+/* Medium devices (landscape tablets, 768px and up) md/*/
 @media only screen and (min-width: 768px) and (max-width:991px){
-
-  .col-md-6 {
-    max-width: 50%;
-    font-size: 90%;
+  .col-md-12 {
+    max-width: 100%;
+    font-size: 115%;
     margin-left:1%; 
-    margin-top: 10%;
+    margin-top: 20%;
   }
   p{
     margin-left: 2%;
@@ -146,6 +191,21 @@ ngb-carousel {
   video {
     height:55%; 
     width:55%;
+  }
+}
+
+/*Dimensions for dual surface*/
+@media screen and (width: 540px) {
+  .col-sm-12 {
+    max-width: 100%;
+    font-size: 80%;
+    margin-left:1%; 
+    margin-top: 15%;
+  }
+  button{
+    margin-left: 30%;
+  }
+  video {width: 50%; height:50%;
   }
 }
 /*xl*/
