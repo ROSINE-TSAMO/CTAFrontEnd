@@ -16,7 +16,7 @@ import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.c
 export class SmartContractComponent implements OnInit {
   
   textImage: string = '';
-  images = ['../../assets/images/bronze.gif','../../assets/images/silver.gif','../../assets/images/gold.gif'];
+  images = ['../../assets/images/booster-rouge.gif','../../assets/images/booster-bleu.gif','../../assets/images/booster-vert.gif'];
   wallet :any;
   signer : any;
   addresses = "0xFe602439187c5b3d64085c7e2038089B2069C711";

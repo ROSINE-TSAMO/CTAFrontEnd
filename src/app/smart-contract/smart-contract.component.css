@@ -1,11 +1,11 @@
-.backgroud_image{
+/* .backgroud_image{
     background-image: url(/assets/images/bg-texture-01.jpg);
     background-size: cover;
-    /*width: 100%;*/
+    /*width: 100%;
     width: 100vw;
     height: 100vh;
     background-repeat: no-repeat;
-}
+} */
 
 .gradient-card{
   width: 500px; 
@@ -82,7 +82,7 @@ ngb-carousel {
     margin-left: 25%;
   }
   ngb-carousel img {
-    width: 45%;
+    width: 50%;
     height:65%;
     outline: none;
   }
@@ -111,7 +111,7 @@ ngb-carousel {
     margin-left: 30%;
   }
   ngb-carousel img {
-    width: 70%; height:70%;
+    width: 50%; height:70%;
     outline: none;
   }
 }
@@ -198,7 +198,7 @@ ngb-carousel {
   }
   ngb-carousel img {
     height:55%; 
-    width:55%;
+    width:28%;
     outline: none;
   }
 }
