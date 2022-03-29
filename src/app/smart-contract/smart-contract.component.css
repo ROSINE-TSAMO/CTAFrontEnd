@@ -1,5 +1,5 @@
 .backgroud_image{
-    background-image: url(/assets/images/bg-fort-1.jpg);
+    background-image: url(/assets/images/bg-texture-01.jpg);
     background-size: cover;
     /*width: 100%;*/
     width: 100vw;
@@ -19,10 +19,10 @@ ngb-carousel {
   /*margin-top: 2%;
   margin: 50px auto;*/
 }
-ngb-carousel img {
+/*ngb-carousel img {
   width: 100%;
   outline: none;
-}
+}*/
 
 ngb-carousel {
   width: inherit;
@@ -81,10 +81,12 @@ ngb-carousel {
   button{
     margin-left: 25%;
   }
-  video {
-    width: 65%;
+  ngb-carousel img {
+    width: 45%;
     height:65%;
+    outline: none;
   }
+  
 }
 /* ----------- iPhone 4 and 4S ----------- */
 
@@ -108,7 +110,9 @@ ngb-carousel {
   button{
     margin-left: 30%;
   }
-  video {width: 70%; height:70%;
+  ngb-carousel img {
+    width: 70%; height:70%;
+    outline: none;
   }
 }
 
@@ -126,7 +130,7 @@ ngb-carousel {
     margin-right: 2%;
   }
 
-  video {
+  img {
     width: 40%; height:40%;
   }
   button{
@@ -147,8 +151,11 @@ ngb-carousel {
   button{
     margin-left: 30%;
   }
-  video {width: 70%; height:70%;
+  ngb-carousel img {
+    width: 70%; height:70%;
+    outline: none;
   }
+ 
 }
 
 
@@ -165,8 +172,9 @@ ngb-carousel {
     margin-right: 2%;
   }
 
-  video {
+  ngb-carousel img {
     width: 40%; height:40%;
+    outline: none;
   }
   button{
     margin-left: 35%;
@@ -188,16 +196,17 @@ ngb-carousel {
   button{
     margin-left: 45%;
   }
-  video {
+  ngb-carousel img {
     height:55%; 
     width:55%;
+    outline: none;
   }
 }
 
 /*Dimensions for dual surface*/
 @media screen and (width: 540px) {
-  .col-sm-12 {
-    max-width: 100%;
+  .col-sm-12{
+    width: 100%;
     font-size: 80%;
     margin-left:1%; 
     margin-top: 15%;
@@ -205,8 +214,19 @@ ngb-carousel {
   button{
     margin-left: 30%;
   }
-  video {width: 50%; height:50%;
+  .img-size{
+    width: 40%;
+    height: 40%;
   }
+  ngb-carousel img {
+    width: 50%; 
+    height:50%;
+    outline: none;
+  }
+  
+
+  
+  
 }
 /*xl*/
 /*@media only screen and (min-width: 1200px) and (max-width: 1400px){
@@ -224,7 +244,7 @@ ngb-carousel {
     /*margin-left: 45%;
   }
  
-  video {
+  img {
     height:45%; 
     width:45%;
   }

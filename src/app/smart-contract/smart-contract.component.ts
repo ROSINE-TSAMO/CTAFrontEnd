@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WinRefService } from'../../services/win-ref.service';
 import {ethers} from 'ethers';
 import StandardPack from '../../contracts/StandardPack.json';
@@ -17,8 +17,6 @@ export class SmartContractComponent implements OnInit {
   
   textImage: string = '';
   images = ['../../assets/images/bronze.gif','../../assets/images/silver.gif','../../assets/images/gold.gif'];
-  //videos = ['../../assets/images/20.mp4','../../assets/images/25.mp4','../../assets/images/30.mp4']
-  videos = ['https://ipfs.io/ipfs/Qmbsn8h22gUGdT72ssmjEULXgHodiWg3MWKbXXTmDeBQ3y','https://ipfs.io/ipfs/QmUiGE8RgLFtaiXgd4RpoeYobS86cQ2fKehD5Q62wJPeQ6','https://ipfs.io/ipfs/QmektUdnenBYBdtdgSXUAn4YXvBJ2C15nUgiQpR7sjoQMu']
   wallet :any;
   signer : any;
   addresses = "0xFe602439187c5b3d64085c7e2038089B2069C711";
