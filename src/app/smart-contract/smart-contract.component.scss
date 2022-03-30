@@ -45,8 +45,7 @@ ngb-carousel img {
    p{
      font-size: 12px;
      padding-bottom: 10px;text-align: justify;
-     margin-left: 3px;
-     margin-right: 3px;
+     margin: 1em 2em !important;
    }
   .mobile-display{
     display:flex;
@@ -74,8 +73,7 @@ ngb-carousel img {
       padding-top: 15px;
       padding-bottom: 10px;
       text-align: justify;
-      margin-left: 2px;
-      margin-right: 2px;
+      margin: 1em 2em !important;
   }
   .mobile-display{
     display:flex;
@@ -107,8 +105,7 @@ ngb-carousel img {
 
   p{
     font-size: 23px;
-    margin-left: 10px;
-     margin-right: 10px;
+    margin: 1em 2em !important;
   }
    ngb-carousel img {
     width: 30%; height:40%;
