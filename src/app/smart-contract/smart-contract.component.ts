@@ -9,7 +9,7 @@ import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.c
 @Component({
   selector: 'app-smart-contract',
   templateUrl: './smart-contract.component.html',
-  styleUrls: ['./smart-contract.component.css']
+  styleUrls: ['./smart-contract.component.scss']
 })
 
 

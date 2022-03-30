@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap');
+
+body{font-family: 'Montserrat', sans-serif; background-color: #02031f; background-position:top center}
+// h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:50px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
+
+p, button {margin-left: 0px !important;}
+p {padding-top: 20px;padding-bottom: 25px;text-align: justify;}
+.mt-3{background: rgb(2,3,31);
+    background: linear-gradient(180deg,rgba(2,3,31,.9) 0%,rgba(2,3,31,.7) 34%,rgba(2,3,31,.4) 71%,rgba(2,3,31,0) 100%);margin-top: 0 !important;padding-top: 1rem !important;}
+footer {text-align:center;}
+.col-lg-6 {text-align:center;}
+
+.btn-primary {letter-spacing: 2px;  background-color: rgba(102,0,255,0.4);}
+.btn-primary:hover {letter-spacing: 2px;  background-color: rgba(102,0,255,1);}
+
+.btn-danger {letter-spacing: 2px;  background-color: rgba(255, 0, 13, 0.4);}
+.btn-danger:hover {letter-spacing: 2px;  background-color: rgb(255, 0, 76);}
+
+.btn-success {letter-spacing: 2px;  background-color: rgba(0, 255, 76, 0.425);}
+.btn-success:hover {letter-spacing: 2px;  background-color: rgba(0, 255, 157, 0.692);}
+
+
+footer {font-size: 12px;}
+footer .text-white {color: #999 !important; padding-bottom: 20px;}
+.align-items-center{margin-top:0px !important;}
+@media (min-width:992px) {
+button{font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 500;padding-left: 15px;padding-right: 15px;margin-bottom: 20px;}
+.col-12.col-sm-12.col-md-12.col-lg-6:first-child {padding-left: 25%;}
+.col-12.col-sm-12.col-md-12.col-lg-6:nth-child(2) {text-align: left !important;}
+.col-12.col-sm-12.col-md-12.col-lg-6:nth-child(2) img {transform: translatex(50%);}
+h4{padding-top: 20px;}
+.carousel.slide {height: calc(100vh - 90px);}
+.carousel-inner {transform: translateY(-50%);top: 50%;}
+ngb-carousel img {
+  width: 30%;
+  height:28%;
+}
+}
+
+/* Extra extreme small devices (phones,600px and down) */
+@media only screen and (max-width: 375px)  {
+   h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
+
+   p{
+     font-size: 12px;
+   }
+  .mobile-display{
+    display:flex;
+    flex-direction: column-reverse;
+  }
+  
+ ngb-carousel img {
+   width: 35%;
+   height:40%;
+ }
+ 
+}
+
+/* Portrait and Landscape */
+@media only screen  and (min-device-width: 375px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
+
+  p{
+    font-size: 12px;
+  }
+  .mobile-display{
+    display:flex;
+    flex-direction: column-reverse;
+  }
+ ngb-carousel img {
+   margin-top: 5%;
+   width: 40%;
+   height:40%;
+ }
+}
+/* Small devices (portrait tablets and large phones) sm */
+@media only screen and (min-width: 576px)and (max-width: 768px) {
+  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:25px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
+
+  ngb-carousel img {
+    width: 70%; height:70%;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) md/*/
+@media only screen and (min-width: 768px) and (max-width:991px){
+  p{
+    font-size: 23px;
+  }
+   ngb-carousel img {
+    width: 40%; height:40%;
+  }
+  button{font-family: 'Rajdhani', sans-serif;font-size:30px;text-transform: uppercase;font-weight: 500;padding-left: 15px;padding-right: 15px;margin-bottom: 20px;}
+
+} 
+
+
+/*Dimensions for dual surface*/
+@media screen and (width: 540px) {
+  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:25px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
+
+  button{font-family: 'Rajdhani', sans-serif;font-size:16px;text-transform: uppercase;font-weight: 500;padding-left: 15px;padding-right: 15px;margin-bottom: 20px;}
+  ngb-carousel img {
+    width: 25%; 
+    height:30%;
+  } 
+}
