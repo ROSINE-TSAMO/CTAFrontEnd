@@ -5,7 +5,7 @@ body{font-family: 'Montserrat', sans-serif; background-color: #02031f; backgroun
 // h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:50px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
 
 p, button {margin-left: 0px !important;}
-p {padding-top: 20px;padding-bottom: 25px;text-align: justify;}
+// p {padding-top: 20px;padding-bottom: 25px;text-align: justify;}
 .mt-3{background: rgb(2,3,31);
     background: linear-gradient(180deg,rgba(2,3,31,.9) 0%,rgba(2,3,31,.7) 34%,rgba(2,3,31,.4) 71%,rgba(2,3,31,0) 100%);margin-top: 0 !important;padding-top: 1rem !important;}
 footer {text-align:center;}
@@ -20,16 +20,15 @@ footer {text-align:center;}
 .btn-success {letter-spacing: 2px;  background-color: rgba(0, 255, 76, 0.425);}
 .btn-success:hover {letter-spacing: 2px;  background-color: rgba(0, 255, 157, 0.692);}
 
-
-footer {font-size: 12px;}
-footer .text-white {color: #999 !important; padding-bottom: 20px;}
+footer {font-size: 14px;}
+footer .text-white {color: #999 !important; padding-bottom: 1px;}
 .align-items-center{margin-top:0px !important;}
 @media (min-width:992px) {
 button{font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 500;padding-left: 15px;padding-right: 15px;margin-bottom: 20px;}
 .col-12.col-sm-12.col-md-12.col-lg-6:first-child {padding-left: 25%;}
 .col-12.col-sm-12.col-md-12.col-lg-6:nth-child(2) {text-align: left !important;}
 .col-12.col-sm-12.col-md-12.col-lg-6:nth-child(2) img {transform: translatex(50%);}
-h4{padding-top: 20px;}
+h4{padding-top: 30px;}
 .carousel.slide {height: calc(100vh - 90px);}
 .carousel-inner {transform: translateY(-50%);top: 50%;}
 ngb-carousel img {
@@ -40,10 +39,14 @@ ngb-carousel img {
 
 /* Extra extreme small devices (phones,600px and down) */
 @media only screen and (max-width: 375px)  {
-   h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
+   h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 700; text-align: center; padding-top: 10px;}
 
    p{
      font-size: 12px;
+    //  padding-top: 20px;
+     padding-bottom: 10px;text-align: justify;
+     margin-left: 2px;
+     margin-right: 2px;
    }
   .mobile-display{
     display:flex;
@@ -59,10 +62,16 @@ ngb-carousel img {
 
 /* Portrait and Landscape */
 @media only screen  and (min-device-width: 375px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
-  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
+  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 700;}
+
 
   p{
-    font-size: 12px;
+    font-size: 13px;
+      // padding-top: 10px;
+      padding-bottom: 10px;
+      text-align: justify;
+      margin-left: 2px;
+      margin-right: 2px;
   }
   .mobile-display{
     display:flex;
@@ -70,26 +79,36 @@ ngb-carousel img {
   }
  ngb-carousel img {
    margin-top: 5%;
-   width: 40%;
+   width: 32%;
    height:40%;
  }
 }
 /* Small devices (portrait tablets and large phones) sm */
 @media only screen and (min-width: 576px)and (max-width: 768px) {
-  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:25px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
+  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:25px;text-transform: uppercase;font-weight: 700;}
 
   ngb-carousel img {
     width: 70%; height:70%;
+  }
+  .mobile-display{
+    display:flex;
+    flex-direction: column-reverse;
   }
 }
 
 /* Medium devices (landscape tablets, 768px and up) md/*/
 @media only screen and (min-width: 768px) and (max-width:991px){
+  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:22px;text-transform: uppercase;font-weight: 700;}
+
   p{
     font-size: 23px;
   }
    ngb-carousel img {
-    width: 40%; height:40%;
+    width: 30%; height:40%;
+  }
+  .mobile-display{
+    display:flex;
+    flex-direction: column-reverse;
   }
   button{font-family: 'Rajdhani', sans-serif;font-size:30px;text-transform: uppercase;font-weight: 500;padding-left: 15px;padding-right: 15px;margin-bottom: 20px;}
 
@@ -98,11 +117,15 @@ ngb-carousel img {
 
 /*Dimensions for dual surface*/
 @media screen and (width: 540px) {
-  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:25px;text-transform: uppercase;font-weight: 700;line-height: 50px;}
+  h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 700;}
 
   button{font-family: 'Rajdhani', sans-serif;font-size:16px;text-transform: uppercase;font-weight: 500;padding-left: 15px;padding-right: 15px;margin-bottom: 20px;}
   ngb-carousel img {
     width: 25%; 
     height:30%;
   } 
+  .mobile-display{
+    display:flex;
+    flex-direction: column-reverse;
+  }
 }
