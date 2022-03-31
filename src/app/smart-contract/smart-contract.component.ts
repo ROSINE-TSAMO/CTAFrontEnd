@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WinRefService } from'../../services/win-ref.service';
+import { LambdaApiService } from '../../services/lambda-api.service';
 import {ethers} from 'ethers';
 import StandardPack from '../../contracts/StandardPack.json';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,7 +16,7 @@ import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.c
 
 export class SmartContractComponent implements OnInit {
   
-  textImage: string = '';
+  encryptMsg: any;
   images = ['../../assets/images/booster-rouge.gif','../../assets/images/booster-bleu.gif','../../assets/images/booster-vert.gif'];
   wallet :any;
   signer : any;
@@ -31,12 +32,16 @@ export class SmartContractComponent implements OnInit {
     ["gold"  , 500]
   ])
   
-  constructor(private winref: WinRefService, public modalService: NgbModal) {
+  constructor(private winref: WinRefService, public modalService: NgbModal, private apiService: LambdaApiService) {
     this.wallet = winref.window.ethereum;    
+    
   }
 
   async ngOnInit() {
       //this.connectPolygon()
+      this.getEncryptMessage();
+
+
 
       //if variable localStorage is null, call the modal windows 
       if(localStorage.getItem('terminiCondizioni') == null){
@@ -50,6 +55,25 @@ export class SmartContractComponent implements OnInit {
     let provider = new ethers.providers.Web3Provider(this.wallet);
     let  balance = await provider.getBalance(account);
     return balance; 
+  }
+
+  //Call the Lambdafunction
+  async getEncryptMessage() {
+    this.apiService.getMessage().subscribe(data => {
+          // Read the result field from the JSON response.
+          console.log("from data:", data)
+          this.encryptMsg = JSON.stringify(data)
+
+  
+         /*  let newValue = JSON.stringify(data).replace('{"Node":', '[');
+          newValue = newValue.substring(0,newValue.length - 1);
+          newValue+="]";
+          const menu=JSON.parse(newValue);
+          this.nodes = menu; */
+        });
+        console.log("from variable:",JSON.parse(this.encryptMsg));
+
+  
   }
 
   //Add network polygon to network
