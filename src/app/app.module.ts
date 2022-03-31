@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { SmartContractComponent } from './smart-contract/smart-contract.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    FlexLayoutModule,
     FontAwesomeModule
   ],
   providers: [WinRefService],
