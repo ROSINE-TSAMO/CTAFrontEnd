@@ -21,7 +21,8 @@ export class SmartContractComponent implements OnInit {
   images = ['../../assets/images/booster-rouge.gif','../../assets/images/booster-bleu.gif','../../assets/images/booster-vert.gif'];
   wallet :any;
   signer : any;
-  addresses = "0xFe602439187c5b3d64085c7e2038089B2069C711";
+  addresses = "0xCC2Ba5Ba6627DdD0Ff11811C2B8eba87ef554f0D";
+  
   ctaContract: any;
   mintNft: any;
   responseFromLambda: any;
@@ -39,7 +40,7 @@ export class SmartContractComponent implements OnInit {
   }
 
   async ngOnInit() {
-      this.connectPolygon()
+      //this.connectPolygon()
       //if variable localStorage is null, call the modal windows 
       if(localStorage.getItem('terminiCondizioni') == null){
          this.openModal();
@@ -69,6 +70,8 @@ export class SmartContractComponent implements OnInit {
       });     
   }
 
+  
+
   //Communication between FE and samrt contract
   async smartContract(typeOfCard: any){
     try{
@@ -77,7 +80,7 @@ export class SmartContractComponent implements OnInit {
         this.signer = provider.getSigner();
         
         let chainId= await this.signer.getChainId();
-        if(chainId !==137){
+        if(chainId !==137 /* 80001*/){
           this.alertWhiteList("Please change your network to polygon");  
         }
         else{
@@ -93,17 +96,20 @@ export class SmartContractComponent implements OnInit {
 
               //check if user have enough matic for minting
               //let balance =ethers.utils.formatEther( await this.getBalance());
-             
-              //this.mintNft =  (await this.ctaContract.createPackage((await this.signer.getAddress(),{value: ethers.utils.parseEther('0.05'),})));
+
+              
+             // this.mintNft =  (await this.ctaContract.create(typeOfCard,userAddress,{value: ethers.utils.parseEther('0.05'),}));
+
               //Wait execution of minting token
-              /*let tx = await this.mintNft.wait();
+              /* let tx = await this.mintNft.wait();
               let event = tx.events[0];
               let value = event.args[2];
               let tokenId = value.toNumber;
-              this.alertWhiteList("Your package has been minting");
-              */
+              console.log("nft created:",tokenId);
+              this.alertWhiteList("Your package has been minting"); */
+             
           }
-          else{
+           else{
             this.alertWhiteList("You can't mint this package because it's not a day of minting");
           }        
         }
