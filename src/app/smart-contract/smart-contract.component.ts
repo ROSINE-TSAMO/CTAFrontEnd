@@ -39,7 +39,7 @@ export class SmartContractComponent implements OnInit {
   }
 
   async ngOnInit() {
-      //this.connectPolygon()
+      this.connectPolygon()
       //if variable localStorage is null, call the modal windows 
       if(localStorage.getItem('terminiCondizioni') == null){
          this.openModal();
@@ -70,18 +70,14 @@ export class SmartContractComponent implements OnInit {
   }
 
   //Communication between FE and samrt contract
-  async smartContract(typeOfCard: any/*type of package as parameters*/){
+  async smartContract(typeOfCard: any){
     try{
-      console.log("Name of card:",typeOfCard);
-      
-
       if(this.wallet){
         const provider = new ethers.providers.Web3Provider(this.wallet);
         this.signer = provider.getSigner();
         
-        
         let chainId= await this.signer.getChainId();
-        if(chainId !==80001 /*137 */){
+        if(chainId !==137){
           console.log("Please change your network to polygon");  
         }
         else{
@@ -92,8 +88,6 @@ export class SmartContractComponent implements OnInit {
           let mintingDay=  this.checkTime();
           if(mintingDay)
           {
-            //check if user is on whitelist
-            
               //Call the smart contract
               //this.ctaContract = new ethers.Contract(this.addresses,StandardPack.abi,this.signer);
 
@@ -108,7 +102,6 @@ export class SmartContractComponent implements OnInit {
               let tokenId = value.toNumber;
               this.alertWhiteList("Your package has been minting");
               */
-            
           }
           else{
             this.alertWhiteList("You can't mint this package because it's not a day of minting");
