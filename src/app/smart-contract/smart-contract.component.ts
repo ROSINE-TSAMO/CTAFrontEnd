@@ -121,7 +121,8 @@ export class SmartContractComponent implements OnInit {
     Swal.fire({
       title: "<i class='fas fa-exclamation-triangle'></i> ops...",
       text:  msg,
-      confirmButtonColor: '#02031f', 
+      confirmButtonColor: '#02031f',
+      heightAuto: false,
     })
   }
   openModal() {
