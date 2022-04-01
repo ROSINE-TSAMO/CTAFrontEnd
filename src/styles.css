@@ -2,14 +2,15 @@
 body{
     background-image: url(/assets/images/bg-texture-01.jpg);
     background-size: cover;
-    /*width: 100%;*/
     width: 100vw;
     height: 100vh;
     background-repeat: no-repeat;
+    background-position:top center
 }
-html, body {
+
+/* html, body {
     overflow-x: hidden;
   }
   body {
     position: relative;
-  }
+  } */

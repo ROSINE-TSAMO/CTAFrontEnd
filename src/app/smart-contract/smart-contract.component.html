@@ -6,7 +6,7 @@
   </div>
   <div class="row" style="margin-top: 6%;">
     <ngb-carousel #c="ngbCarousel" [interval]=0>
-      <ng-template ngbSlide id="bronze">
+      <ng-template ngbSlide id="apprentice">
         <div class="row align-items-center mobile-display" >
             <div class="col-12 col-sm-12 col-md-12 col-lg-6">
               <h2  class="text-white text-center">Apprentice pack</h2>
@@ -15,7 +15,7 @@
                   1 MYTHIC<br>
                   Limited Edition
                 </p>
-              <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-danger">Mint this package</button>
+              <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-danger" style="outline: none !important;box-shadow: none;">Mint this package</button>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6  text-center">
               <img  [src]="images[0]"/>
@@ -23,7 +23,7 @@
         </div>
       </ng-template>
 
-      <ng-template ngbSlide id="silver">
+      <ng-template ngbSlide id="disciple">
       <div class="row align-items-center mobile-display">
           <div class="col-12 col-sm-12 col-md-12 col-lg-6">
             <h2  class="text-white text-center">Disciple Pack</h2>
@@ -32,7 +32,7 @@
                 3 Mythic<br>
                 Limited Edition
             </p>            
-            <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-primary">Mint this package</button>
+            <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-primary" style="outline: none !important;box-shadow: none;">Mint this package</button>
           </div>
           <div class="col-12 col-sm-12 col-md-12 col-lg-6  text-center">
             <img [src]="images[1]"/>
@@ -40,7 +40,7 @@
       </div>
     </ng-template>
 
-    <ng-template ngbSlide id="gold">
+    <ng-template ngbSlide id="primus">
       <div class="row align-items-center mobile-display" >
         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
           <h2  class="text-white text-center">Primus pack</h2>
@@ -49,7 +49,7 @@
               6 mythic<br>
               Limited edition
           </p>            
-          <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-success">Mint this package</button>
+          <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-success" style="outline: none !important;box-shadow: none;">Mint this package</button>
         </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
         <img [src]="images[2]"/>

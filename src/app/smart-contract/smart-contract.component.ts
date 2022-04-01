@@ -5,6 +5,7 @@ import {ethers} from 'ethers';
 import StandardPack from '../../contracts/StandardPack.json';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.component';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -23,57 +24,26 @@ export class SmartContractComponent implements OnInit {
   addresses = "0xFe602439187c5b3d64085c7e2038089B2069C711";
   ctaContract: any;
   mintNft: any;
-  public  matic: number = 0;
+  responseFromLambda: any;
+  
   idPolygon: number = 139;
 
   promotionCard = new Map<string, number>([
-    ["bronze", 100],
-    ["silver", 250],
-    ["gold"  , 500]
+    ["apprentice", 100],
+    ["disciple", 250],
+    ["primus"  , 500]
   ])
   
   constructor(private winref: WinRefService, public modalService: NgbModal, private apiService: LambdaApiService) {
     this.wallet = winref.window.ethereum;    
-    
   }
 
   async ngOnInit() {
       //this.connectPolygon()
-      this.getEncryptMessage();
-
-
-
       //if variable localStorage is null, call the modal windows 
       if(localStorage.getItem('terminiCondizioni') == null){
          this.openModal();
       }
-  }
-
- 
-  async getBalance(){
-    let [account] = await this.wallet.request({ method: 'eth_requestAccounts' });
-    let provider = new ethers.providers.Web3Provider(this.wallet);
-    let  balance = await provider.getBalance(account);
-    return balance; 
-  }
-
-  //Call the Lambdafunction
-  async getEncryptMessage() {
-    this.apiService.getMessage().subscribe(data => {
-          // Read the result field from the JSON response.
-          console.log("from data:", data)
-          this.encryptMsg = JSON.stringify(data)
-
-  
-         /*  let newValue = JSON.stringify(data).replace('{"Node":', '[');
-          newValue = newValue.substring(0,newValue.length - 1);
-          newValue+="]";
-          const menu=JSON.parse(newValue);
-          this.nodes = menu; */
-        });
-        console.log("from variable:",JSON.parse(this.encryptMsg));
-
-  
   }
 
   //Add network polygon to network
@@ -103,49 +73,64 @@ export class SmartContractComponent implements OnInit {
   async smartContract(typeOfCard: any/*type of package as parameters*/){
     try{
       console.log("Name of card:",typeOfCard);
-      console.log("Price of card:",this.promotionCard.get(typeOfCard));
+      
 
       if(this.wallet){
         const provider = new ethers.providers.Web3Provider(this.wallet);
         this.signer = provider.getSigner();
+        
+        
         let chainId= await this.signer.getChainId();
-        if(chainId !== 137 /*80001*/){
+        if(chainId !==80001 /*137 */){
           console.log("Please change your network to polygon");  
         }
         else{
-          console.log("id network:", chainId);        
+          console.log("id network:", chainId); 
+          let userAddress = await this.signer.getAddress()
+          console.log("Account:",userAddress);  
+          //check if is the date for minting 
+          let mintingDay=  this.checkTime();
+          if(mintingDay)
+          {
+            //check if user is on whitelist
+            
+              //Call the smart contract
+              //this.ctaContract = new ethers.Contract(this.addresses,StandardPack.abi,this.signer);
 
-          //console.log("Balance:",balance );
-
-          //Call the smart smart contract
-          //this.ctaContract = new ethers.Contract(this.addresses,StandardPack.abi,this.signer);
-
-          //check if user have enough matic for minting
-          //let balance =ethers.utils.formatEther( await this.getBalance());
-          /*if(parseFloat(balance)< this.promotionCard.bronze){
-              console.log("Don't get enough matic to mint his card");
+              //check if user have enough matic for minting
+              //let balance =ethers.utils.formatEther( await this.getBalance());
+             
+              //this.mintNft =  (await this.ctaContract.createPackage((await this.signer.getAddress(),{value: ethers.utils.parseEther('0.05'),})));
+              //Wait execution of minting token
+              /*let tx = await this.mintNft.wait();
+              let event = tx.events[0];
+              let value = event.args[2];
+              let tokenId = value.toNumber;
+              this.alertWhiteList("Your package has been minting");
+              */
+            
           }
           else{
-            //this.mintNft =  (await this.ctaContract.createPackage((await this.signer.getAddress(),{value: ethers.utils.parseEther('0.05'),})));
-            //Wait execution of minting token
-            /*let tx = await this.mintNft.wait();
-            let event = tx.events[0];
-            let value = event.args[2];
-            let tokenId = value.toNumber;
-            console.log("Token from polygon network:",tokenId);
-          }*/
+            this.alertWhiteList("You can't mint this package because it's not a day of minting");
+          }        
         }
       }
       else{
-        console.log("Please Install metamask");
+        this.alertWhiteList("Please Install metamask");
       }
     }
     catch(error)
     {
-      console.log("Something goes wrong:",error);
+      //console.log("Something goes wrong:",error);
     }
   }
-
+  alertWhiteList(msg:any){
+    Swal.fire({
+      title: "<i class='fas fa-exclamation-triangle'></i> ops...",
+      text:  msg,
+      confirmButtonColor: '#02031f', 
+    })
+  }
   openModal() {
     //ModalComponent is component name where modal is declare
     const modalRef = this.modalService.open(TermsConditionsComponent);
@@ -154,5 +139,37 @@ export class SmartContractComponent implements OnInit {
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  //check if balance of user is enough
+  async getBalance(){
+    let [account] = await this.wallet.request({ method: 'eth_requestAccounts' });
+    let provider = new ethers.providers.Web3Provider(this.wallet);
+    let  balance = await provider.getBalance(account);
+    return balance; 
+  }
+
+//check time
+  checkTime(): boolean {
+    let today = new Date();
+    let check = false;
+    if(today.getDay() == 5)
+    {
+      if (today.getHours() >= 10 && (today.getHours() <= 23 && today.getMinutes() < 59)){
+        check= false;
+      }
+    }
+    else if(today.getDay() == 6)
+    {
+      if (today.getHours() >= 0 && (today.getHours() < 9 && today.getMinutes() < 59))
+      {
+        check= false;
+      }
+    }
+    else
+    {
+       check= true;
+    }
+    return check
   }
 }

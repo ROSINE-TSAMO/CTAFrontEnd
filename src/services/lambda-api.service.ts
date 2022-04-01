@@ -6,12 +6,21 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LambdaApiService {
     //Get matic from site 
-    private endpointLambda = 'https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions/mintingSite?tab=configure' 
+    private endpointLambda = 'https://owg1iq3x8e.execute-api.us-east-1.amazonaws.com/default' 
   
     constructor(private http: HttpClient) { }
 
     public getMessage()
     {
         return  this.http.get<any>(this.endpointLambda);
+    }
+
+    public sendMsg(msg : any, card:any) {
+      const headers = { 'content-type': 'application/json'}  
+      const body = {
+        msg: msg,
+        card: card
+      }
+      return this.http.post(this.endpointLambda, body, {'headers':headers})
     }
 }

@@ -44,6 +44,7 @@ ngb-carousel img {
 /* Extra extreme small devices (phones,600px and down) */
 @media only screen and (max-width: 375px)  {
    h1,h2,h3,h4,h5,h6{color: #d0d0d0 !important;font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 700; text-align: center; padding-top: 10px;}
+   button{font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 500;padding-left: 15px;padding-right: 15px;margin-bottom: 20px;}
 
    p{
      font-size: 12px;
@@ -68,9 +69,8 @@ ngb-carousel img {
     text-transform: uppercase;font-weight: 700; text-align: center;
   margin-right: 10px;
   margin-left: 10px;
-}
-
-
+  }
+  button{font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 500;padding-left: 15px;padding-right: 15px;margin-bottom: 20px;}
   p{
     font-size: 13px;
       padding-top: 15px;
@@ -100,6 +100,8 @@ ngb-carousel img {
     display:flex;
     flex-direction: column-reverse;
   }
+  button{font-family: 'Rajdhani', sans-serif;font-size:20px;text-transform: uppercase;font-weight: 500;padding-left: 15px;padding-right: 15px;margin-bottom: 20px;}
+
 }
 
 /* Medium devices (landscape tablets, 768px and up) md/*/
