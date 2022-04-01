@@ -78,12 +78,12 @@ export class SmartContractComponent implements OnInit {
         
         let chainId= await this.signer.getChainId();
         if(chainId !==137){
-          console.log("Please change your network to polygon");  
+          this.alertWhiteList("Please change your network to polygon");  
         }
         else{
-          console.log("id network:", chainId); 
+          //console.log("id network:", chainId); 
           let userAddress = await this.signer.getAddress()
-          console.log("Account:",userAddress);  
+          //console.log("Account:",userAddress);  
           //check if is the date for minting 
           let mintingDay=  this.checkTime();
           if(mintingDay)
@@ -114,7 +114,7 @@ export class SmartContractComponent implements OnInit {
     }
     catch(error)
     {
-      //console.log("Something goes wrong:",error);
+      this.alertWhiteList("Please Connect metamask");
     }
   }
   alertWhiteList(msg:any){
