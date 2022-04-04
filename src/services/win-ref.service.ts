@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 const w = () => {
   return window;
 }

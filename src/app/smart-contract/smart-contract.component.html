@@ -6,7 +6,7 @@
   </div>
   <div class="row" style="margin-top: 6%;">
     <ngb-carousel #c="ngbCarousel" [interval]=0>
-      <ng-template ngbSlide id="apprentice">
+      <ng-template ngbSlide id="0">
         <div class="row align-items-center mobile-display" >
             <div class="col-12 col-sm-12 col-md-12 col-lg-6">
               <h2  class="text-white text-center">Apprentice pack</h2>
@@ -23,7 +23,7 @@
         </div>
       </ng-template>
 
-      <ng-template ngbSlide id="disciple">
+      <ng-template ngbSlide id="1">
       <div class="row align-items-center mobile-display">
           <div class="col-12 col-sm-12 col-md-12 col-lg-6">
             <h2  class="text-white text-center">Disciple Pack</h2>
@@ -40,7 +40,7 @@
       </div>
     </ng-template>
 
-    <ng-template ngbSlide id="primus">
+    <ng-template ngbSlide id="2">
       <div class="row align-items-center mobile-display" >
         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
           <h2  class="text-white text-center">Primus pack</h2>
@@ -58,8 +58,10 @@
     </ng-template>
   </ngb-carousel>
   </div>
- 
 </div> 
+<div *ngIf="spinner === true" >
+  <ngx-spinner size = "medium" type="square-jelly-box" [fullScreen] = "true"  type="ball-fussion"><p style="color: white" > Minting NFT... </p></ngx-spinner>
+</div>
  <footer class="fixed-bottom">
     <div class="row align-items-center text-center">
       <div class="col-12">

@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { WinRefService } from '../services/win-ref.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import Swal from 'sweetalert2';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,7 +25,10 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    NgxSpinnerModule
+
   ],
   providers: [WinRefService],
   bootstrap: [AppComponent]
