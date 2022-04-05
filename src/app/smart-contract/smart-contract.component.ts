@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WinRefService } from '../../services/win-ref.service';
 import { LambdaApiService } from '../../services/lambda-api.service';
 import { ethers } from 'ethers';
-import StandardPack from '../../contracts/StandardPack.json';
+import { Contract } from '../../contracts/StandardPack';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.component';
 import Swal from 'sweetalert2';
@@ -21,7 +21,7 @@ export class SmartContractComponent implements OnInit {
   images = ['../../assets/images/booster-rouge.gif', '../../assets/images/booster-vert.gif', '../../assets/images/booster-bleu.gif'];
   wallet: any;
   signer: any;
-  addressesContract = "0x591D63bd26b370BB2C67a52c942D024a08E2fcD5";
+  addressesContract = "0x5DE1e6Ec2b6AA7508fb59392680b96E1b911C3Ca";
 
   ctaContract: any;
   mintNft: any;
@@ -42,7 +42,7 @@ export class SmartContractComponent implements OnInit {
 
     this.wallet = this.winref.window.ethereum;
 
-    //this.connectPolygon()
+    // this.connectPolygon()
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
       this.openModal();
@@ -91,12 +91,14 @@ export class SmartContractComponent implements OnInit {
           if (mintingDay) {
             try {
               //Set the smart contract
-              this.ctaContract = new ethers.Contract(this.addressesContract, StandardPack.abi, this.signer);
+              this.ctaContract = new ethers.Contract(this.addressesContract, Contract.abi, this.signer);
               //Call the api here
 
 
-              this.sendMessage("0x065647C1176CC4AB2B48B7e4D67Dea090c3B1d59").subscribe(async (res) => {
-                if (res != null) {
+              this.sendMessage(userAddress).subscribe(async (res) => {
+                console.log(res)
+                let response = JSON.parse(JSON.stringify(res))
+                if (response.body != 'null') {
                   //Call the function of smart contract
                   this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0001'), }));
                   //this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!), }));

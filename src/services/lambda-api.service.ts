@@ -15,14 +15,9 @@ export class LambdaApiService {
   }
 
   public sendMsg(msg: any) {
-    const headers = {
-      
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Origin": "*"
-    }
     const body = {
       address: msg,
     }
-    return this.http.post(this.endpointLambda, body, { 'headers': headers })
+    return this.http.post(this.endpointLambda, body)
   }
 }
