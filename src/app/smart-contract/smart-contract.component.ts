@@ -85,7 +85,7 @@ export class SmartContractComponent implements OnInit {
         this.signer = provider.getSigner();
         let chainId = await this.signer.getChainId();
         //console.log("chainId", chainId)
-        if (chainId !== 80001    /*137*/) {
+        if (chainId !== 137    /*137*/) {
           this.alertWhiteList("Please change your network to polygon");
           //this.alertWhiteList("Please change your network to mumbai");
         }
@@ -105,7 +105,7 @@ export class SmartContractComponent implements OnInit {
                 let response = JSON.parse(JSON.stringify(res))
                 if (response.body != 'null') {
                   console.log(JSON.parse(response.body));
-                  
+
                   //Call the function of smart contract
                   // this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0001'), }));
                   this.mintNft = (await this.ctaContract.create(Number(typeOfCard), JSON.parse(response.body), { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
