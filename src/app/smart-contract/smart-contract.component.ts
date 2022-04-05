@@ -21,23 +21,23 @@ export class SmartContractComponent implements OnInit {
   images = ['../../assets/images/booster-rouge.gif', '../../assets/images/booster-vert.gif', '../../assets/images/booster-bleu.gif'];
   wallet: any;
   signer: any;
-  addressesContract = "0x5DE1e6Ec2b6AA7508fb59392680b96E1b911C3Ca";
+  addressesContract = "0x66d1bbf7Ad44491468465F56bf092F74ff84d6Ef";
 
   ctaContract: any;
   mintNft: any;
   responseFromLambda: any;
 
   spinner = false;
-  // promotionCard = new Map<string, number>([
-  //   ["0", 61],
-  //   ["1", 153],
-  //   ["2", 304]
-  // ])
   promotionCard = new Map<string, string>([
-    ["0", '1'],
-    ["1", '1'],
-    ["2", '2']
+    ["0", "61"],
+    ["1", "153"],
+    ["2", "304"]
   ])
+  // promotionCard = new Map<string, string>([
+  //   ["0", '1'],
+  //   ["1", '1'],
+  //   ["2", '2']
+  // ])
 
   constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi: LambdaApiService) {
   }
@@ -47,7 +47,7 @@ export class SmartContractComponent implements OnInit {
 
     this.wallet = this.winref.window.ethereum;
 
-    // this.connectPolygon()
+    this.connectPolygon()
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
       this.openModal();
@@ -118,7 +118,7 @@ export class SmartContractComponent implements OnInit {
                   let transactionHash = event.transactionHash;
                   this.spinner = false
                   this.hideSpinner()
-                  let url = "https://mumbai.polygonscan.com/tx/" + transactionHash;
+                  let url = "https://polygonscan.com/tx/" + transactionHash;
 
                   Swal.fire({
                     title: 'NFT minted!',
