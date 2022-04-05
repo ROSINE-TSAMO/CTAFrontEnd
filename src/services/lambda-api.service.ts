@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LambdaApiService {
     //Get matic from site 
-    private endpointLambda = 'https://owg1iq3x8e.execute-api.us-east-1.amazonaws.com/default' 
+    private endpointLambda = 'https://owg1iq3x8e.execute-api.us-east-1.amazonaws.com/default/' 
   
     constructor(private http: HttpClient) { }
 
@@ -16,7 +16,10 @@ export class LambdaApiService {
     }
 
     public sendMsg(msg : any, card:any) {
-      const headers = { 'content-type': 'application/json'}  
+      const headers = { 'content-type': 'application/json',
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*"
+    }  
       const body = {
         msg: msg,
         card: card

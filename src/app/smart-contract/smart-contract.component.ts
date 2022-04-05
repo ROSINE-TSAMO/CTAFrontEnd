@@ -34,11 +34,12 @@ export class SmartContractComponent implements OnInit {
     ["2", "500"]
   ])
 
-  constructor(private winref: WinRefService, public modalService: NgbModal, private spinnerService: NgxSpinnerService) {
+  constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi:LambdaApiService) {
   }
 
   async ngOnInit() {
     this.wallet = this.winref.window.ethereum;
+    
     //this.connectPolygon()
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
@@ -89,8 +90,8 @@ export class SmartContractComponent implements OnInit {
             //Set the smart contract
             this.ctaContract = new ethers.Contract(this.addressesContract, StandardPack.abi, this.signer);
             //Call the function of smart contract
-            //this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0001'), }));
-            this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!), }));
+            this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0001'), }));
+            //this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!), }));
             this.spinner = true;
             this.showSpinner();
             //Wait execution of minting token
@@ -121,6 +122,13 @@ export class SmartContractComponent implements OnInit {
       this.alertWhiteList("Please Install metamask");
     }
   }
+  //call the the api to send message
+  sendMessages() {
+    this.lambdaApi.getMessage()
+    .subscribe(data => 
+      console.log("Msg from api:",data))
+  }
+  
   alertWhiteList(msg: any) {
     Swal.fire({
       title: "<i class='fas fa-exclamation-triangle'></i> ops...",
