@@ -38,9 +38,6 @@ export class SmartContractComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.sendMessages();
-
-
 
 
     this.wallet = this.winref.window.ethereum;
@@ -83,9 +80,9 @@ export class SmartContractComponent implements OnInit {
         this.signer = provider.getSigner();
         let chainId = await this.signer.getChainId();
         //console.log("chainId", chainId)
-        if (chainId !== 80001   /*137*/) {
-          //this.alertWhiteList("Please change your network to polygon");
-          this.alertWhiteList("Please change your network to mumbai");
+        if (chainId !== 80001    /*137*/) {
+          this.alertWhiteList("Please change your network to polygon");
+          //this.alertWhiteList("Please change your network to mumbai");
         }
         else {
           let userAddress = await this.signer.getAddress()
@@ -95,27 +92,37 @@ export class SmartContractComponent implements OnInit {
             try {
               //Set the smart contract
               this.ctaContract = new ethers.Contract(this.addressesContract, StandardPack.abi, this.signer);
-              //Call the function of smart contract
-              this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0001'), }));
-              //this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!), }));
-              this.spinner = true;
-              this.showSpinner();
-              //Wait execution of minting token
-              let tx = await this.mintNft.wait();
-              let event = tx.events[0];
+              //Call the api here
 
-              let transactionHash = event.transactionHash;
-              this.spinner = false
-              this.hideSpinner()
-              let url = "https://mumbai.polygonscan.com/tx/" + transactionHash;
 
-              Swal.fire({
-                title: 'NFT minted!',
-                html: '<a target="bank" href="' + url + '">Click here to see details of NFT here</a>',
-                confirmButtonColor: '#02031f',
-                heightAuto: false,
+              this.sendMessage("0x065647C1176CC4AB2B48B7e4D67Dea090c3B1d59").subscribe(async (res) => {
+                if (res != null) {
+                  //Call the function of smart contract
+                  this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0001'), }));
+                  //this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!), }));
+                  this.spinner = true;
+                  this.showSpinner();
+                  //Wait execution of minting token
+                  let tx = await this.mintNft.wait();
+                  let event = tx.events[0];
+
+                  let transactionHash = event.transactionHash;
+                  this.spinner = false
+                  this.hideSpinner()
+                  let url = "https://mumbai.polygonscan.com/tx/" + transactionHash;
+
+                  Swal.fire({
+                    title: 'NFT minted!',
+                    html: '<a target="bank" href="' + url + '">Click here to see details of NFT here</a>',
+                    confirmButtonColor: '#02031f',
+                    heightAuto: false,
+                  })
+                } else {
+                  this.alertWhiteList("You are not allow to mint this package");
+                }
               })
-            } catch (err: any) {
+            }
+            catch (err: any) {
               this.alertWhiteList(err["data"]["message"]);
             }
           }
@@ -135,20 +142,19 @@ export class SmartContractComponent implements OnInit {
     }
   }
   //call the the api to send message
-  sendMessages() {
-    this.lambdaApi.getMessage()
-      .subscribe(data =>
-        console.log("Msg from api:", data))
+  sendMessage(address: any) {
+    return this.lambdaApi.sendMsg(address)
   }
 
   alertWhiteList(msg: any) {
     Swal.fire({
-      title: "<i class='fas fa-exclamation-triangle'></i> ops...",
+      title: "<i  class='fas fa-exclamation-triangle'></i> ops...",
       text: msg,
       confirmButtonColor: '#02031f',
       heightAuto: false,
     })
   }
+
   openModal() {
     //ModalComponent is component name where modal is declare
     const modalRef = this.modalService.open(TermsConditionsComponent);

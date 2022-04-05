@@ -12,12 +12,12 @@ export class TermsConditionsComponent implements OnInit {
   closeResult = '';
   constructor(private activeModal: NgbActiveModal) { }
   ngOnInit(): void {
-     this.SetLocalStorage();
+    this.SetLocalStorage();
   }
-  SetLocalStorage(){
+  SetLocalStorage() {
     localStorage.setItem('terminiCondizioni', 'true');
   }
   closeModal() {
-    this.activeModal.close('Modal Closed');
+    this.activeModal.close('');
   }
 }
