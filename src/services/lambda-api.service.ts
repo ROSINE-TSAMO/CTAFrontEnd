@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LambdaApiService {
     //Get matic from site 
-    private endpointLambda = 'https://owg1iq3x8e.execute-api.us-east-1.amazonaws.com/default/' 
+    private endpointLambda = 'https://r7s74pt7yk.execute-api.us-east-1.amazonaws.com/prod/Lambda-function-PremiumPack' 
   
     constructor(private http: HttpClient) { }
 
