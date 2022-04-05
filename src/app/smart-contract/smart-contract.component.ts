@@ -90,7 +90,7 @@ export class SmartContractComponent implements OnInit {
             //Set the smart contract
             this.ctaContract = new ethers.Contract(this.addressesContract, StandardPack.abi, this.signer);
             //Call the function of smart contract
-            this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0001'), }));
+            this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0002'), }));
             //this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!), }));
             this.spinner = true;
             this.showSpinner();
