@@ -5,12 +5,12 @@ body{
     width: 100vw;
     height: 100vh;
     background-repeat: no-repeat;
-    background-position:top center
+    background-position:top center;
 }
 
-/* html, body {
-    overflow-x: hidden;
+html, body {
+    overflow-x: hidden !important;
   }
   body {
-    position: relative;
-  } */
+    position: relative !important;
+  } 
