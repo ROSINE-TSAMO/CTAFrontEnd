@@ -28,10 +28,15 @@ export class SmartContractComponent implements OnInit {
   responseFromLambda: any;
 
   spinner = false;
+  // promotionCard = new Map<string, number>([
+  //   ["0", 61],
+  //   ["1", 153],
+  //   ["2", 304]
+  // ])
   promotionCard = new Map<string, string>([
-    ["0", "100"],
-    ["1", "250"],
-    ["2", "500"]
+    ["0", '1'],
+    ["1", '1'],
+    ["2", '2']
   ])
 
   constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi: LambdaApiService) {
@@ -99,9 +104,11 @@ export class SmartContractComponent implements OnInit {
                 console.log(res)
                 let response = JSON.parse(JSON.stringify(res))
                 if (response.body != 'null') {
+                  console.log(JSON.parse(response.body));
+                  
                   //Call the function of smart contract
-                  this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0001'), }));
-                  //this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!), }));
+                  // this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('0.0001'), }));
+                  this.mintNft = (await this.ctaContract.create(Number(typeOfCard), JSON.parse(response.body), { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
                   this.spinner = true;
                   this.showSpinner();
                   //Wait execution of minting token
