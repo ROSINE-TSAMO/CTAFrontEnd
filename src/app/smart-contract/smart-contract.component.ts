@@ -44,10 +44,10 @@ export class SmartContractComponent implements OnInit {
 
   async ngOnInit() {
 
-
     this.wallet = this.winref.window.ethereum;
 
     this.connectPolygon()
+    this.connectWallet();
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
       this.openModal();
@@ -70,11 +70,16 @@ export class SmartContractComponent implements OnInit {
         blockExplorerUrls: ["https://polygonscan.com/"]
       }
     }
-    //if polygon is not installed, then open metamask window to add polygon network 
-    await this.wallet.request({
-      method: "wallet_addEthereumChain",
-      params: [{ ...networks["polygon"] }]
-    });
+    //if polygon is not installed, then open metamask window to add polygon network  
+    try {
+      await this.wallet.request({
+        method: "wallet_addEthereumChain",
+        params: [{ ...networks["polygon"] }]
+      });
+    }
+    catch (error) {
+      this.alertWhiteList("Problem to add polygon on Metamask")
+    }
   }
 
   //Communication between FE and samrt contract
@@ -201,5 +206,16 @@ export class SmartContractComponent implements OnInit {
   //Hide spinner during the creation of nft
   public hideSpinner() {
     this.spinnerService.hide()
+  }
+
+  async connectWallet() {
+    const accounts = await this.wallet.request({ method: 'eth_requestAccounts' });
+    const account = accounts[0];
+    if (accounts.length === 0) {
+      console.log('your are not logging on polygon')
+    } else {
+      console.log('your are  logging on polygon')
+    }
+
   }
 }
