@@ -31,11 +31,11 @@ export class SmartContractComponent implements OnInit {
   responseFromLambda: any;
 
   spinner = false;
-   promotionCard = new Map<string, string>([
-     ["0", "61"],
-     ["1", "153"],
-     ["2", "304"]
-   ])
+  promotionCard = new Map<string, string>([
+    ["0", "61"],
+    ["1", "153"],
+    ["2", "304"]
+  ])
   /* promotionCard = new Map<string, string>([
     ["0", '1'],
     ["1", '1'],
@@ -164,14 +164,14 @@ export class SmartContractComponent implements OnInit {
               //catch error from metamask and see if user have enough fund to mint or user have already minted a package
               if (typeof error === 'object' && error["data"]["message"].includes('insufficient funds for gas')) {
                 this.alertWhiteList("Your Matic balance is insufficient to operate transaction");
-                //console.log('this is object',error);
               }
-              else if (typeof error === 'object' && error["data"]["message"].includes('already has just buy a Pack'))
-              this.alertWhiteList('Address already has Just buy a pack');
-              else if (typeof error === 'object' && error["data"]["message"].includes('invalid signature'))
-              this.alertWhiteList('You illegally attempt to mint this pack');
-              else
-              {
+              else if (typeof error === 'object' && error["data"]["message"].includes('already has just buy a Pack')) {
+                this.alertWhiteList('Address already has Just buy a pack');
+              }
+              else if (typeof error === 'object' && error["data"]["message"].includes('invalid signature')) {
+                this.alertWhiteList('You illegally attempt to mint this pack');
+              }
+              else {
                 this.alertWhiteList('Something went wrong, try to mint later');
               }
             }
@@ -187,7 +187,7 @@ export class SmartContractComponent implements OnInit {
 
     }
     catch (error) {
-      this.alertWhiteList(error);
+      this.alertWhiteList("Connect manually the site with metamask");
       //this.alertWhiteList("Please connect the site to metamask");
 
     }
