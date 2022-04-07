@@ -80,7 +80,7 @@ export class SmartContractComponent implements OnInit {
         method: "wallet_addEthereumChain",
         params: [{ ...networks["polygon"] }]
       });
-      
+
     }
     catch (error) {
       this.alertWhiteList("Problem to add polygon on Metamask, try later")
@@ -167,10 +167,10 @@ export class SmartContractComponent implements OnInit {
                 this.alertWhiteList("Your Matic balance is insufficient to operate transaction");
               }
               else if (typeof error === 'object' && error["data"]["message"].includes('already has just buy a Pack')) {
-                this.alertWhiteList('Address already has Just buy a pack');
+                this.alertWhiteList('Address has already bought a pack');
               }
               else if (typeof error === 'object' && error["data"]["message"].includes('invalid signature')) {
-                this.alertWhiteList('You illegally attempt to mint this pack');
+                this.alertWhiteList('You attempt to mint this pack abnormally!');
               }
               else {
                 this.alertWhiteList('Something went wrong, try to mint later');
@@ -250,7 +250,7 @@ export class SmartContractComponent implements OnInit {
     const accounts = await this.wallet.request({ method: 'eth_requestAccounts' });
     const account = accounts[0];
     if (accounts.length === 0) {
-      
+
       //console.log('your are not logging on polygon')
       console.log('your are not logging on mumbai')
     } else {
