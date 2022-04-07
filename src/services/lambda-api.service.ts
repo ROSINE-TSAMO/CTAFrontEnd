@@ -9,11 +9,6 @@ export class LambdaApiService {
   private endpointLambda = 'https://r7s74pt7yk.execute-api.us-east-1.amazonaws.com/prod/Lambda-function-PremiumPack'
 
   constructor(private http: HttpClient) { }
-
-  public getMessage() {
-    return this.http.get<any>(this.endpointLambda);
-  }
-
   public sendMsg(msg: any) {
     const body = {
       address: msg,
