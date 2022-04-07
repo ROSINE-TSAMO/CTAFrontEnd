@@ -249,6 +249,7 @@ export class SmartContractComponent implements OnInit {
     const accounts = await this.wallet.request({ method: 'eth_requestAccounts' });
     const account = accounts[0];
     if (accounts.length === 0) {
+      window.location.reload();
       //console.log('your are not logging on polygon')
       console.log('your are not logging on mumbai')
     } else {
