@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { WinRefService } from '../../services/win-ref.service';
-import { LambdaApiService } from '../../services/lambda-api.service';
+import { WinRefService } from '../services/win-ref.service';
+import { LambdaApiService } from '../services/lambda-api.service';
 import { ethers } from 'ethers';
-import { Contract } from '../../contracts/StandardPack';
+import { Contract } from '../../contracts/PremiumPack';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.component';
 import Swal from 'sweetalert2';
@@ -225,11 +225,14 @@ export class SmartContractComponent implements OnInit {
       if (today.getHours() >= 10 && (today.getHours() <= 23 && today.getMinutes() < 59)) {
         check = false;
       }
+      else { check = true }
+
     }
     else if (today.getDay() == 6) {
       if (today.getHours() >= 0 && (today.getHours() < 9 && today.getMinutes() < 59)) {
         check = false;
       }
+      else { check = true }
     }
     else {
       check = true;
