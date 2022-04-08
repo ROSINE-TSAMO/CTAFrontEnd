@@ -23,7 +23,7 @@ export class SmartContractComponent implements OnInit {
   signer: any;
   //addressesContract = "0x66d1bbf7Ad44491468465F56bf092F74ff84d6Ef";   //this is for polygon
 
-  addressesContract = "0x591D63bd26b370BB2C67a52c942D024a08E2fcD5"; //this is for mumbai
+  addressesContract = "0x364B53AcC44aB93e94F995275661e3073Fe37791"; //this is for mumbai
 
 
   ctaContract: any;
@@ -31,27 +31,27 @@ export class SmartContractComponent implements OnInit {
   responseFromLambda: any;
 
   spinner = false;
-  promotionCard = new Map<string, string>([
+  /* promotionCard = new Map<string, string>([
     ["0", "61"],
     ["1", "153"],
     ["2", "304"]
-  ])
-  /* promotionCard = new Map<string, string>([
+  ]) */
+  promotionCard = new Map<string, string>([
     ["0", '1'],
     ["1", '1'],
     ["2", '2']
-  ]) */
+  ])
 
   constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi: LambdaApiService) {
   }
 
   async ngOnInit() {
-    this.showAlertClosedSale('Next sale will open soon. Please check social media for announcement!')
+    //this.showAlertClosedSale('Next sale will open soon. Please check social media for announcement!')
 
-    // this.wallet = this.winref.window.ethereum;
+    this.wallet = this.winref.window.ethereum;
     //this.connectPolygon()
-    // this.connectMumbai();
-    // this.connectWallet();
+    this.connectMumbai();
+    this.connectWallet();
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
       this.openModal();
@@ -95,38 +95,45 @@ export class SmartContractComponent implements OnInit {
         this.signer = provider.getSigner();
         let chainId = await this.signer.getChainId();
         //console.log("chainId", chainId)
-        if (chainId !== 137    /*80001*/) {
+        if (chainId !== 80001    /*80001*/) {
           //this.alertWhiteList("Please change your network to polygon");
           this.alertWhiteList("Please change your network to mumbai");
         }
         else {
           let userAddress = await this.signer.getAddress()
           //check if is the date for minting 
-          let mintingDay = this.checkTime();
-          if (mintingDay) {
+         /*  let mintingDay = this.checkTime();
+          if (mintingDay) { */
             try {
               //Set the smart contract
               this.ctaContract = new ethers.Contract(this.addressesContract, Contract.abi, this.signer);
 
               /*****This code for test mumbai */
+              this.sendMessage(userAddress).subscribe(async (res) => {
+                let response = JSON.parse(JSON.stringify(res))
+                if (response.body != 'null') {
 
-              this.mintNft = (await this.ctaContract.create(Number(typeOfCard), userAddress, { value: ethers.utils.parseEther('1000') }));
-              this.spinner = true;
-              this.showSpinner();
-              //Wait execution of minting token
-              let tx = await this.mintNft.wait();
-              let event = tx.events[0];
+                  this.mintNft = (await this.ctaContract.create(Number(typeOfCard), response.body, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
+                  this.spinner = true;
+                  this.showSpinner();
+                  //Wait execution of minting token
+                  let tx = await this.mintNft.wait();
+                  let event = tx.events[0];
 
-              let transactionHash = event.transactionHash;
-              this.spinner = false
-              this.hideSpinner()
-              let url = "https://mumbai.polygonscan.com/tx/" + transactionHash;
+                  let transactionHash = event.transactionHash;
+                  this.spinner = false
+                  this.hideSpinner()
+                  let url = "https://mumbai.polygonscan.com/tx/" + transactionHash;
 
-              Swal.fire({
-                title: 'NFT minted!',
-                html: '<a target="bank" href="' + url + '">Click here to see details of NFT here</a>',
-                confirmButtonColor: '#02031f',
-                heightAuto: false,
+                  Swal.fire({
+                    title: 'NFT minted!',
+                    html: '<a target="bank" href="' + url + '">Click here to see details of NFT here</a>',
+                    confirmButtonColor: '#02031f',
+                    heightAuto: false,
+                  })
+                } else {
+                  this.alertWhiteList("Your wallet address is not whitelisted");
+                }
               })
 
               /**End code for mumbai */
@@ -176,10 +183,10 @@ export class SmartContractComponent implements OnInit {
                 this.alertWhiteList('Something went wrong, try to mint later');
               }
             }
-          }
-          else {
+          /*}
+           else {
             this.alertWhiteList("You can't mint this package because it's not a day of minting");
-          }
+          } */
         }
       }
       else {
