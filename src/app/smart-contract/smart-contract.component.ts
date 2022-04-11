@@ -46,12 +46,12 @@ export class SmartContractComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')
+    //this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')
 
-    // this.wallet = this.winref.window.ethereum;
+     this.wallet = this.winref.window.ethereum;
     //this.connectPolygon()
-    // this.connectMumbai();
-    // this.connectWallet();
+     this.connectMumbai();
+     this.connectWallet();
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
       this.openModal();
@@ -95,7 +95,7 @@ export class SmartContractComponent implements OnInit {
         this.signer = provider.getSigner();
         let chainId = await this.signer.getChainId();
         //console.log("chainId", chainId)
-        if (chainId !== 137    /*80001*/) {
+        if (chainId !== 80001    /*137*/) {
           //this.alertWhiteList("Please change your network to polygon");
           this.alertWhiteList("Please change your network to mumbai");
         }
