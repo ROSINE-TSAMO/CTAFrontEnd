@@ -23,7 +23,7 @@ export class SmartContractComponent implements OnInit {
   signer: any;
   //addressesContract = "0x66d1bbf7Ad44491468465F56bf092F74ff84d6Ef";   //this is for polygon
 
-  addressesContract = "0x364B53AcC44aB93e94F995275661e3073Fe37791"; //this is for mumbai
+  addressesContract = "0x5f3D063F38aaAB60411DE7B8AE7e0565d3AC8393"; //this is for mumbai
 
 
   ctaContract: any;
@@ -116,6 +116,9 @@ export class SmartContractComponent implements OnInit {
                     }
                     else if (typeof error === 'object' && error["data"]["message"].includes('supply reached')) {
                       this.alertError('Max supply reached!');
+                    }
+                    else if (typeof error === 'object' && error["data"]["message"].includes(' is not open')) {
+                      this.alertError('Sale is not open!');
                     }else if (typeof error === 'object' && error["data"]["message"].includes('invalid signature')) {
                       this.alertError('You attempt to mint this pack abnormally!');
                     }else {
@@ -145,7 +148,6 @@ export class SmartContractComponent implements OnInit {
     catch (error) {
       this.alertError("Connect manually the site with metamask");
       //this.alertError("Please connect the site to metamask");
-
     }
   }
   //call the the api to send message
