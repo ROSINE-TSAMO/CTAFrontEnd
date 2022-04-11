@@ -46,7 +46,7 @@ export class SmartContractComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.showAlertClosedSale('Next sale will open soon. Please check social media for announcement!')
+    this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')
 
     // this.wallet = this.winref.window.ethereum;
     //this.connectPolygon()
@@ -209,7 +209,7 @@ export class SmartContractComponent implements OnInit {
 
   showAlertClosedSale(msg: any) {
     Swal.fire({
-      title: "<i  class='fa-light fa-face-pensive'></i> Sale is Closed",
+      title: "<i  class='fa-light fa-face-pensive'></i> SALE IS CLOSED",
       text: msg,
       heightAuto: false,
       showConfirmButton: false,
