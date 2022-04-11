@@ -37,9 +37,9 @@ export class SmartContractComponent implements OnInit {
     ["2", "304"]
   ]) */
   promotionCard = new Map<string, string>([
-    ["0", '1'],
-    ["1", '1'],
-    ["2", '2']
+    ["0", '0.5'],
+    ["1", '0.5'],
+    ["2", '0.5']
   ])
 
   constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi: LambdaApiService) {
@@ -48,44 +48,17 @@ export class SmartContractComponent implements OnInit {
   async ngOnInit() {
     //this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')
 
-     this.wallet = this.winref.window.ethereum;
+    this.wallet = this.winref.window.ethereum;
     //this.connectPolygon()
-     this.connectMumbai();
-     this.connectWallet();
+    this.connectMumbai();
+    this.connectWallet();
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
       this.openModal();
     }
   }
 
-  //Add network polygon to metamask
-  async connectPolygon() {
-    //Parameters of polygon network
-    const networks = {
-      polygon: {
-        chainId: `0x${Number(137).toString(16)}`,
-        chainName: "Polygon Mainnet",
-        nativeCurrency: {
-          name: "MATIC",
-          symbol: "MATIC",
-          decimals: 18
-        },
-        rpcUrls: ["https://polygon-rpc.com/"],
-        blockExplorerUrls: ["https://polygonscan.com/"]
-      }
-    }
-    //if polygon is not installed, then open metamask window to add polygon network  
-    try {
-      await this.wallet.request({
-        method: "wallet_addEthereumChain",
-        params: [{ ...networks["polygon"] }]
-      });
 
-    }
-    catch (error) {
-      this.alertWhiteList("Problem to add polygon on Metamask, try later")
-    }
-  }
 
   //Communication between FE and samrt contract
   async smartContract(typeOfCard: any) {
@@ -94,109 +67,84 @@ export class SmartContractComponent implements OnInit {
         const provider = new ethers.providers.Web3Provider(this.wallet);
         this.signer = provider.getSigner();
         let chainId = await this.signer.getChainId();
-        //console.log("chainId", chainId)
         if (chainId !== 80001    /*137*/) {
-          //this.alertWhiteList("Please change your network to polygon");
-          this.alertWhiteList("Please change your network to mumbai");
+          //this.alertError("Please change your network to polygon");
+          this.alertError("Please change your network to mumbai");
         }
         else {
           let userAddress = await this.signer.getAddress()
           //check if is the date for minting 
-         /*  let mintingDay = this.checkTime();
-          if (mintingDay) { */
+          let mintingDay = this.checkTime();
+          if (mintingDay) {
             try {
               //Set the smart contract
               this.ctaContract = new ethers.Contract(this.addressesContract, Contract.abi, this.signer);
 
-              /*****This code for test mumbai */
               this.sendMessage(userAddress).subscribe(async (res) => {
+                //Check if user is on whitelist
                 let response = JSON.parse(JSON.stringify(res))
                 if (response.body != 'null') {
+                  try {
+                    this.mintNft = (await this.ctaContract.create(Number(typeOfCard), response.body, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
+                    this.spinner = true;
+                    this.showSpinner();
+                    //Wait execution of minting token
+                    let tx = await this.mintNft.wait();
+                    let event = tx.events[0];
+                    let transactionHash = event.transactionHash;
+                    this.spinner = false
+                    this.hideSpinner()
+                    //let url = "https://polygonscan.com/tx/" + transactionHash; //For polygon
+                    let url = "https://mumbai.polygonscan.com/tx/" + transactionHash; //For mumbai
+                    Swal.fire({
+                      title: 'NFT minted!',
+                      html: '<a target="bank" href="' + url + '">Click here to see details of NFT here</a>',
+                      confirmButtonColor: '#02031f',
+                      heightAuto: false,
+                    })
+                  }
+                  catch (error: any) {
+                    //catch error from metamask and see if user have enough fund to mint or user have already minted a package
+                    if (typeof error === 'object' && error["data"]["message"].includes('insufficient funds for gas')) {
+                      this.alertError("Your Matic balance is insufficient to operate transaction");
+                    }
+                    else if (typeof error === 'object' && error["data"]["message"].includes('has already minted')) {
+                      this.alertError('Address has already bought a pack');
+                    }
+                    else if (typeof error === 'object' && error["data"]["message"].includes('nvalid package type')) {
+                      this.alertError('Invalid package type');
+                    }
+                    else if (typeof error === 'object' && error["data"]["message"].includes('supply reached')) {
+                      this.alertError('Max supply reached!');
+                    }else if (typeof error === 'object' && error["data"]["message"].includes('invalid signature')) {
+                      this.alertError('You attempt to mint this pack abnormally!');
+                    }else {
+                      this.alertError('Something went wrong, try to mint later');
+                    }
+                  }
 
-                  this.mintNft = (await this.ctaContract.create(Number(typeOfCard), response.body, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
-                  this.spinner = true;
-                  this.showSpinner();
-                  //Wait execution of minting token
-                  let tx = await this.mintNft.wait();
-                  let event = tx.events[0];
-
-                  let transactionHash = event.transactionHash;
-                  this.spinner = false
-                  this.hideSpinner()
-                  let url = "https://mumbai.polygonscan.com/tx/" + transactionHash;
-
-                  Swal.fire({
-                    title: 'NFT minted!',
-                    html: '<a target="bank" href="' + url + '">Click here to see details of NFT here</a>',
-                    confirmButtonColor: '#02031f',
-                    heightAuto: false,
-                  })
                 } else {
-                  this.alertWhiteList("Your wallet address is not whitelisted");
+                  this.alertError("Your wallet address is not whitelisted");
                 }
               })
-
-              /**End code for mumbai */
-
-
-
-              //Call the api here
-              // this.sendMessage(userAddress).subscribe(async (res) => {
-              //   let response = JSON.parse(JSON.stringify(res))
-              //   if (response.body != 'null') {
-              //     //Call the function of smart contract
-              //     this.mintNft = (await this.ctaContract.create(Number(typeOfCard), JSON.parse(response.body), { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
-              //     this.spinner = true;
-              //     this.showSpinner();
-              //     //Wait execution of minting token
-              //     let tx = await this.mintNft.wait();
-              //     let event = tx.events[0];
-
-              //     let transactionHash = event.transactionHash;
-              //     this.spinner = false
-              //     this.hideSpinner()
-              //     let url = "https://polygonscan.com/tx/" + transactionHash;
-
-              //     Swal.fire({
-              //       title: 'NFT minted!',
-              //       html: '<a target="bank" href="' + url + '">Click here to see details of NFT here</a>',
-              //       confirmButtonColor: '#02031f',
-              //       heightAuto: false,
-              //     })
-              //   } else {
-              //     this.alertWhiteList("Your wallet address is not whitelisted");
-              //   }
-              // })
             }
             catch (error: any) {
-              //catch error from metamask and see if user have enough fund to mint or user have already minted a package
-              if (typeof error === 'object' && error["data"]["message"].includes('insufficient funds for gas')) {
-                this.alertWhiteList("Your Matic balance is insufficient to operate transaction");
-              }
-              else if (typeof error === 'object' && error["data"]["message"].includes('already has just buy a Pack')) {
-                this.alertWhiteList('Address has already bought a pack');
-              }
-              else if (typeof error === 'object' && error["data"]["message"].includes('invalid signature')) {
-                this.alertWhiteList('You attempt to mint this pack abnormally!');
-              }
-              else {
-                this.alertWhiteList('Something went wrong, try to mint later');
-              }
+              console.log("Error", error)
             }
-          /*}
-           else {
-            this.alertWhiteList("You can't mint this package because it's not a day of minting");
-          } */
+          }
+          else {
+            this.alertError("You can't mint this package because it's not a day of minting");
+          }
         }
       }
       else {
-        this.alertWhiteList("Please Install metamask");
+        this.alertError("Please Install metamask");
       }
 
     }
     catch (error) {
-      this.alertWhiteList("Connect manually the site with metamask");
-      //this.alertWhiteList("Please connect the site to metamask");
+      this.alertError("Connect manually the site with metamask");
+      //this.alertError("Please connect the site to metamask");
 
     }
   }
@@ -205,7 +153,7 @@ export class SmartContractComponent implements OnInit {
     return this.lambdaApi.sendMsg(address)
   }
 
-  alertWhiteList(msg: any) {
+  alertError(msg: any) {
     Swal.fire({
       title: "<i  class='fas fa-exclamation-triangle'></i> ops...",
       text: msg,
@@ -280,6 +228,35 @@ export class SmartContractComponent implements OnInit {
 
   }
 
+    //Add network polygon to metamask
+    async connectPolygon() {
+      //Parameters of polygon network
+      const networks = {
+        polygon: {
+          chainId: `0x${Number(137).toString(16)}`,
+          chainName: "Polygon Mainnet",
+          nativeCurrency: {
+            name: "MATIC",
+            symbol: "MATIC",
+            decimals: 18
+          },
+          rpcUrls: ["https://polygon-rpc.com/"],
+          blockExplorerUrls: ["https://polygonscan.com/"]
+        }
+      }
+      //if polygon is not installed, then open metamask window to add polygon network  
+      try {
+        await this.wallet.request({
+          method: "wallet_addEthereumChain",
+          params: [{ ...networks["polygon"] }]
+        });
+  
+      }
+      catch (error) {
+        this.alertError("Problem to add polygon on Metamask, try later")
+      }
+    }
+
   async connectMumbai() {
     //Parameters of polygon network
     const networks = {
@@ -303,7 +280,7 @@ export class SmartContractComponent implements OnInit {
       });
     }
     catch (error) {
-      this.alertWhiteList("Problem to add mumbai on Metamask, try later")
+      this.alertError("Problem to add mumbai on Metamask, try later")
     }
   }
 }
