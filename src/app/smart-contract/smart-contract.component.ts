@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { WinRefService } from '../services/win-ref.service';
 import { LambdaApiService } from '../services/lambda-api.service';
 import { ethers } from 'ethers';
@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.component';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { connect } from 'http2';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class SmartContractComponent implements OnInit {
   images = ['../../assets/images/booster-rouge.gif', '../../assets/images/booster-vert.gif', '../../assets/images/booster-bleu.gif'];
   wallet: any;
   signer: any;
+  provider: any;
   //addressesContract = "0x66d1bbf7Ad44491468465F56bf092F74ff84d6Ef";   //this is for polygon
 
   addressesContract = "0x5f3D063F38aaAB60411DE7B8AE7e0565d3AC8393"; //this is for mumbai
@@ -28,7 +30,9 @@ export class SmartContractComponent implements OnInit {
 
   ctaContract: any;
   mintNft: any;
-  responseFromLambda: any;
+  isConnect = false
+  account: any;
+  balance: any;
 
   spinner = false;
   /* promotionCard = new Map<string, string>([
@@ -47,25 +51,25 @@ export class SmartContractComponent implements OnInit {
 
   async ngOnInit() {
     //this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')
-
     this.wallet = this.winref.window.ethereum;
-    //this.connectPolygon()
+    this.provider = new ethers.providers.Web3Provider(this.wallet);
     this.connectMumbai();
+    //this.connectPolygon()
     this.connectWallet();
+    this.loadData();
+    
+
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
       this.openModal();
     }
   }
 
-
-
   //Communication between FE and samrt contract
   async smartContract(typeOfCard: any) {
     try {
       if (this.wallet) {
-        const provider = new ethers.providers.Web3Provider(this.wallet);
-        this.signer = provider.getSigner();
+        this.signer = this.provider.getSigner();
         let chainId = await this.signer.getChainId();
         if (chainId !== 80001    /*137*/) {
           //this.alertError("Please change your network to polygon");
@@ -119,9 +123,9 @@ export class SmartContractComponent implements OnInit {
                     }
                     else if (typeof error === 'object' && error["data"]["message"].includes(' is not open')) {
                       this.alertError('Sale is not open!');
-                    }else if (typeof error === 'object' && error["data"]["message"].includes('invalid signature')) {
+                    } else if (typeof error === 'object' && error["data"]["message"].includes('invalid signature')) {
                       this.alertError('You attempt to mint this pack abnormally!');
-                    }else {
+                    } else {
                       this.alertError('Something went wrong, try to mint later');
                     }
                   }
@@ -146,8 +150,8 @@ export class SmartContractComponent implements OnInit {
 
     }
     catch (error) {
-      this.alertError("Connect manually the site with metamask");
-      //this.alertError("Please connect the site to metamask");
+     // this.alertError("First connect  the site on metamask");
+      this.connectWallet();
     }
   }
   //call the the api to send message
@@ -191,15 +195,12 @@ export class SmartContractComponent implements OnInit {
     if (today.getDay() == 5) {
       if (today.getHours() >= 10 && (today.getHours() <= 23 && today.getMinutes() < 59)) {
         check = false;
-      }
-      else { check = true }
-
+      } else { check = true }
     }
     else if (today.getDay() == 6) {
       if (today.getHours() >= 0 && (today.getHours() < 9 && today.getMinutes() < 59)) {
         check = false;
-      }
-      else { check = true }
+      } else { check = true }
     }
     else {
       check = true;
@@ -217,47 +218,60 @@ export class SmartContractComponent implements OnInit {
   }
 
   async connectWallet() {
-    const accounts = await this.wallet.request({ method: 'eth_requestAccounts' });
-    const account = accounts[0];
-    if (accounts.length === 0) {
+    if (this.wallet) {
+      this.connectMumbai();
 
-      //console.log('your are not logging on polygon')
-      console.log('your are not logging on mumbai')
-    } else {
-      //console.log('your are  logging on polygon')
-      console.log('your are logging on mumbai')
+      let accounts = await this.wallet.request({ method: 'eth_requestAccounts' });
+      let connectAccount = accounts[0];
+      let balanceFrom = ethers.utils.formatEther(await this.getBalance());
+      this.balance = balanceFrom.toString().substring(0, 6) + " MATIC";
+      this.account = connectAccount.substring(0, 4) + "..." + connectAccount.substring(connectAccount.length - 4);
+      this.isConnect = true;
+    }
+  }
+  async getBalance() {
+    let [account] = await this.wallet.request({ method: 'eth_requestAccounts' });
+    let balance = await this.provider.getBalance(account);
+    return balance;
+  }
+  async loadData() {
+  
+    let accountsOnLoad = await this.provider.listAccounts();
+    if (accountsOnLoad.length !== 0) {
+      let balanceFrom = ethers.utils.formatEther(await this.getBalance());
+      this.balance = balanceFrom.toString().substring(0, 6) + " MATIC";
+      this.account = accountsOnLoad[0].substring(0, 4) + "..." + accountsOnLoad[0].substring(accountsOnLoad[0].length - 4);
+      this.isConnect = true;
     }
 
   }
 
-    //Add network polygon to metamask
-    async connectPolygon() {
-      //Parameters of polygon network
-      const networks = {
-        polygon: {
-          chainId: `0x${Number(137).toString(16)}`,
-          chainName: "Polygon Mainnet",
-          nativeCurrency: {
-            name: "MATIC",
-            symbol: "MATIC",
-            decimals: 18
-          },
-          rpcUrls: ["https://polygon-rpc.com/"],
-          blockExplorerUrls: ["https://polygonscan.com/"]
-        }
-      }
-      //if polygon is not installed, then open metamask window to add polygon network  
-      try {
-        await this.wallet.request({
-          method: "wallet_addEthereumChain",
-          params: [{ ...networks["polygon"] }]
-        });
-  
-      }
-      catch (error) {
-        this.alertError("Problem to add polygon on Metamask, try later")
+  //Add network polygon to metamask
+  async connectPolygon() {
+    const networks = {
+      polygon: {
+        chainId: `0x${Number(137).toString(16)}`,
+        chainName: "Polygon Mainnet",
+        nativeCurrency: {
+          name: "MATIC",
+          symbol: "MATIC",
+          decimals: 18
+        },
+        rpcUrls: ["https://polygon-rpc.com/"],
+        blockExplorerUrls: ["https://polygonscan.com/"]
       }
     }
+    //if polygon is not installed, then open metamask window to add polygon network  
+    try {
+      await this.wallet.request({
+        method: "wallet_addEthereumChain",
+        params: [{ ...networks["polygon"] }]
+      });
+    }
+    catch (error) {
+      this.alertError("Problem to add polygon on Metamask, try later")
+    }
+  }
 
   async connectMumbai() {
     //Parameters of polygon network
@@ -282,7 +296,7 @@ export class SmartContractComponent implements OnInit {
       });
     }
     catch (error) {
-      this.alertError("Problem to add mumbai on Metamask, try later")
+      //this.alertError("Problem to add mumbai on Metamask, try later")
     }
   }
 }

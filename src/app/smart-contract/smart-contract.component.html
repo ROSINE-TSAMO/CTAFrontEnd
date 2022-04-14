@@ -1,10 +1,20 @@
-<!-- container-fluid (click)="onSlideClicked(c)"  col-md-6 col-xl-6 col-lg-6-->
+
 <div class="container-fluid"> 
-  <div class="row" >
-    <div class="col-12 text-center mt-3"><img src="../assets/images/log.png"/>  </div>
+  <div class="row" style="margin: 1em;">
+    <div id="desktop" class="col-12  col-lg-7  text-center mt-3"><img src="../assets/images/log.png"/>  </div>
+    <div id="mobile"  class="col-3   text-center  mt-3"><img style="max-width: 55%;"  src="../assets/images/mobile.png"/>  </div>
+    
+    <div *ngIf="isConnect" class="col-9 col-lg-5  mt-3 text-center ">
+      <button disabled="true" style="padding: 0.5em;" class="btn btn-dark text-right text-white">{{account}}</button>
+    </div>
+    <div *ngIf="!isConnect" class="col-9 col-lg-5  mt-3 text-center">
+      <button  (click)="connectWallet()" style="padding: 0.5em;" class="btn btn-dark text-right text-white">Connect Wallet</button>  
+    </div>
     
   </div>
-  <div class="row" style="margin-top: 6%;">
+  
+  
+  <div class="row" style="margin-top: 4%;">
     <ngb-carousel #c="ngbCarousel" [interval]=0>
       <ng-template ngbSlide id="0">
         <div class="row align-items-center mobile-display" >
