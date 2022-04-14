@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WinRefService } from '../services/win-ref.service';
 import { LambdaApiService } from '../services/lambda-api.service';
 import { ethers } from 'ethers';
@@ -23,9 +23,9 @@ export class SmartContractComponent implements OnInit {
   wallet: any;
   signer: any;
   provider: any;
-  //addressesContract = "0x66d1bbf7Ad44491468465F56bf092F74ff84d6Ef";   //this is for polygon
+  //addressesContract = "";   //this is for polygon
 
-  addressesContract = "0x5f3D063F38aaAB60411DE7B8AE7e0565d3AC8393"; //this is for mumbai
+  addressesContract = "0x44440269027e73f1a87c07544fcec8787174f6bf";  //this is for mumbai
 
 
   ctaContract: any;
@@ -50,14 +50,16 @@ export class SmartContractComponent implements OnInit {
   }
 
   async ngOnInit() {
-    //this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')
+    if(!this.checkTime()){
+      this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')}
     this.wallet = this.winref.window.ethereum;
     this.provider = new ethers.providers.Web3Provider(this.wallet);
     this.connectMumbai();
     //this.connectPolygon()
     this.connectWallet();
     this.loadData();
-    
+
+
 
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
@@ -78,7 +80,8 @@ export class SmartContractComponent implements OnInit {
         else {
           let userAddress = await this.signer.getAddress()
           //check if is the date for minting 
-          let mintingDay = this.checkTime();
+          //let mintingDay = this.checkTime();
+          let mintingDay =true
           if (mintingDay) {
             try {
               //Set the smart contract
@@ -89,7 +92,7 @@ export class SmartContractComponent implements OnInit {
                 let response = JSON.parse(JSON.stringify(res))
                 if (response.body != 'null') {
                   try {
-                    this.mintNft = (await this.ctaContract.create(Number(typeOfCard), response.body, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
+                    this.mintNft = (await this.ctaContract.createPack(Number(typeOfCard), response.body, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
                     this.spinner = true;
                     this.showSpinner();
                     //Wait execution of minting token
@@ -125,7 +128,8 @@ export class SmartContractComponent implements OnInit {
                       this.alertError('Sale is not open!');
                     } else if (typeof error === 'object' && error["data"]["message"].includes('invalid signature')) {
                       this.alertError('You attempt to mint this pack abnormally!');
-                    } else {
+                    }
+                    else {
                       this.alertError('Something went wrong, try to mint later');
                     }
                   }
@@ -150,7 +154,7 @@ export class SmartContractComponent implements OnInit {
 
     }
     catch (error) {
-     // this.alertError("First connect  the site on metamask");
+      this.alertError("Open pending request on metamask");
       this.connectWallet();
     }
   }
@@ -191,7 +195,31 @@ export class SmartContractComponent implements OnInit {
   //check time
   checkTime(): boolean {
     let today = new Date();
+
     let check = false;
+    /* //friday is a minting day [17]
+    if (today.getDay() == 5) {
+      if (today.getHours() >= 17 && (today.getHours() <= 23 && today.getMinutes() <= 59)) {
+        check = true;
+      } else { check = false }
+    }
+    //saturday and sunday are  minting day
+    else if (today.getDay() == 6 || today.getDay() == 0) {
+      check = true;
+    }
+    //Monday is  minting day
+    else if (today.getDay() == 1) {
+      if (today.getHours() >= 0 && (today.getHours() <= 16 && today.getMinutes() <= 59)) {
+        check = true;
+      } else { check = false }
+    }
+    else {
+      check = false;
+    }
+    return check;
+  */
+
+
     if (today.getDay() == 5) {
       if (today.getHours() >= 10 && (today.getHours() <= 23 && today.getMinutes() < 59)) {
         check = false;
@@ -235,7 +263,7 @@ export class SmartContractComponent implements OnInit {
     return balance;
   }
   async loadData() {
-  
+
     let accountsOnLoad = await this.provider.listAccounts();
     if (accountsOnLoad.length !== 0) {
       let balanceFrom = ethers.utils.formatEther(await this.getBalance());
@@ -243,8 +271,8 @@ export class SmartContractComponent implements OnInit {
       this.account = accountsOnLoad[0].substring(0, 4) + "..." + accountsOnLoad[0].substring(accountsOnLoad[0].length - 4);
       this.isConnect = true;
     }
-
   }
+
 
   //Add network polygon to metamask
   async connectPolygon() {
@@ -269,7 +297,7 @@ export class SmartContractComponent implements OnInit {
       });
     }
     catch (error) {
-      this.alertError("Problem to add polygon on Metamask, try later")
+      // this.alertError("Problem to add polygon on Metamask, try later")
     }
   }
 
