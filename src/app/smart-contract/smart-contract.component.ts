@@ -25,7 +25,7 @@ export class SmartContractComponent implements OnInit {
   provider: any;
   addressesContract = "0xb6041EAe62C4591458AF480679c6A497EDA6CfcD";   //this is for polygon
 
-  //addressesContract = "0x44440269027e73f1a87c07544fcec8787174f6bf";  //this is for mumbai
+
 
 
   ctaContract: any;
@@ -40,28 +40,22 @@ export class SmartContractComponent implements OnInit {
     ["1", "182"],
     ["2", "365"]
   ])
-  /* promotionCard = new Map<string, string>([
-    ["0", '0.5'],
-    ["1", '0.5'],
-    ["2", '0.5']
-  ]) */
+
 
   constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi: LambdaApiService) {
   }
 
   async ngOnInit() {
     if (!this.checkTime()) {
-      this.showAlertClosedSale('Sale is about to open as soon as airdrop is finished')
-    }//Next sale will open soon. Please check our social media for announcement!
+      this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')
+    }
 
     this.wallet = this.winref.window.ethereum;
     this.provider = new ethers.providers.Web3Provider(this.wallet);
 
-    //this.connectPolygon()
-    //this.connectWallet();
-    //this.loadData();
-
-
+    /* this.connectPolygon()
+    this.connectWallet();
+    this.loadData(); */
 
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
@@ -90,6 +84,7 @@ export class SmartContractComponent implements OnInit {
               this.sendMessage(userAddress).subscribe(async (res) => {
                 //Check if user is on whitelist
                 let response = JSON.parse(JSON.stringify(res))
+                console.log("Msg from lambda:", response.body)
                 if (response.body != 'null' || response.body != null) {
                   try {
                     this.mintNft = (await this.ctaContract.createPack(Number(typeOfCard), response.body, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
@@ -110,7 +105,6 @@ export class SmartContractComponent implements OnInit {
                     })
                   }
                   catch (error: any) {
-                    console.log("error", error);
                     //catch error from metamask and see if user have enough fund to mint or user have already minted a package
                     if (typeof error === 'object' && error["data"]["message"].includes('insufficient funds for gas')) {
                       this.alertError("Your Matic balance is insufficient to operate transaction");
@@ -173,7 +167,7 @@ export class SmartContractComponent implements OnInit {
 
   showAlertClosedSale(msg: any) {
     Swal.fire({
-      title: "<i  class='fa-light fa-face-pensive'></i> SALE IS CLOSED",
+      title: "<i  class='fa-light fa-face-pensive'></i> SALE WILL OPEN SOON",
       text: msg,
       heightAuto: false,
       showConfirmButton: false,
@@ -232,8 +226,8 @@ export class SmartContractComponent implements OnInit {
 
       let accounts = await this.wallet.request({ method: 'eth_requestAccounts' });
       let connectAccount = accounts[0];
-      let balanceFrom = ethers.utils.formatEther(await this.getBalance());
-      this.balance = balanceFrom.toString().substring(0, 6) + " MATIC";
+      /* let balanceFrom = ethers.utils.formatEther(await this.getBalance());
+      this.balance = balanceFrom.toString().substring(0, 6) + " MATIC"; */
       this.account = connectAccount.substring(0, 4) + "..." + connectAccount.substring(connectAccount.length - 4);
       this.isConnect = true;
     }
@@ -247,8 +241,8 @@ export class SmartContractComponent implements OnInit {
 
     let accountsOnLoad = await this.provider.listAccounts();
     if (accountsOnLoad.length !== 0) {
-      let balanceFrom = ethers.utils.formatEther(await this.getBalance());
-      this.balance = balanceFrom.toString().substring(0, 6) + " MATIC";
+      /* let balanceFrom = ethers.utils.formatEther(await this.getBalance());
+      this.balance = balanceFrom.toString().substring(0, 6) + " MATIC"; */
       this.account = accountsOnLoad[0].substring(0, 4) + "..." + accountsOnLoad[0].substring(accountsOnLoad[0].length - 4);
       this.isConnect = true;
     }
