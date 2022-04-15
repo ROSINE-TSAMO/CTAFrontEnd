@@ -133,7 +133,6 @@ export class SmartContractComponent implements OnInit {
                       this.alertError('Something went wrong, try to mint later');
                     }
                   }
-
                 } else {
                   this.alertError("Your wallet address is not whitelisted");
                 }
@@ -197,7 +196,7 @@ export class SmartContractComponent implements OnInit {
     let today = new Date();
 
     let check = false;
-    /* //friday is a minting day [17]
+    //friday is a minting day [17]
     if (today.getDay() == 5) {
       if (today.getHours() >= 17 && (today.getHours() <= 23 && today.getMinutes() <= 59)) {
         check = true;
@@ -217,10 +216,9 @@ export class SmartContractComponent implements OnInit {
       check = false;
     }
     return check;
-  */
+ 
 
-
-    if (today.getDay() == 5) {
+    /* if (today.getDay() == 5) {
       if (today.getHours() >= 10 && (today.getHours() <= 23 && today.getMinutes() < 59)) {
         check = false;
       } else { check = true }
@@ -233,7 +231,7 @@ export class SmartContractComponent implements OnInit {
     else {
       check = true;
     }
-    return check
+    return check */
   }
 
   //Display spinner during the creation of nft
