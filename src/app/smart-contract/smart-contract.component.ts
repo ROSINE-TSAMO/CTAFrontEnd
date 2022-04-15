@@ -80,8 +80,8 @@ export class SmartContractComponent implements OnInit {
         else {
           let userAddress = await this.signer.getAddress()
           //check if is the date for minting 
-          //let mintingDay = this.checkTime();
-          let mintingDay =true
+          let mintingDay = this.checkTime();
+          //let mintingDay =true
           if (mintingDay) {
             try {
               //Set the smart contract
