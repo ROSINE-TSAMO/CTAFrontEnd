@@ -25,9 +25,6 @@ export class SmartContractComponent implements OnInit {
   provider: any;
   addressesContract = "0xb6041EAe62C4591458AF480679c6A497EDA6CfcD";   //this is for polygon
 
-
-
-
   ctaContract: any;
   mintNft: any;
   isConnect = false
@@ -53,9 +50,9 @@ export class SmartContractComponent implements OnInit {
     this.wallet = this.winref.window.ethereum;
     this.provider = new ethers.providers.Web3Provider(this.wallet);
 
-    /* this.connectPolygon()
+    this.connectPolygon()
     this.connectWallet();
-    this.loadData(); */
+    this.loadData();
 
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
@@ -84,8 +81,7 @@ export class SmartContractComponent implements OnInit {
               this.sendMessage(userAddress).subscribe(async (res) => {
                 //Check if user is on whitelist
                 let response = JSON.parse(JSON.stringify(res))
-                console.log("Msg from lambda:", response.body)
-                if (response.body != 'null' || response.body != null) {
+                if (response.body != 'null' && response.body != null) {
                   try {
                     this.mintNft = (await this.ctaContract.createPack(Number(typeOfCard), response.body, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
                     this.spinner = true;
@@ -130,7 +126,6 @@ export class SmartContractComponent implements OnInit {
                 } else {
                   this.alertError("Your wallet address is not whitelisted");
                 }
-
               })
             }
             catch (error: any) {
@@ -191,7 +186,7 @@ export class SmartContractComponent implements OnInit {
     let check = false;
     //friday is a minting day [17]
     if (today.getDay() == 5) {
-      if (today.getHours() >= 19 && (today.getHours() <= 23 && today.getMinutes() <= 59)) {
+      if (today.getHours() >= 17 && (today.getHours() <= 23 && today.getMinutes() <= 59)) {
         check = true;
       } else { check = false }
     }
@@ -226,8 +221,6 @@ export class SmartContractComponent implements OnInit {
 
       let accounts = await this.wallet.request({ method: 'eth_requestAccounts' });
       let connectAccount = accounts[0];
-      /* let balanceFrom = ethers.utils.formatEther(await this.getBalance());
-      this.balance = balanceFrom.toString().substring(0, 6) + " MATIC"; */
       this.account = connectAccount.substring(0, 4) + "..." + connectAccount.substring(connectAccount.length - 4);
       this.isConnect = true;
     }
@@ -241,8 +234,6 @@ export class SmartContractComponent implements OnInit {
 
     let accountsOnLoad = await this.provider.listAccounts();
     if (accountsOnLoad.length !== 0) {
-      /* let balanceFrom = ethers.utils.formatEther(await this.getBalance());
-      this.balance = balanceFrom.toString().substring(0, 6) + " MATIC"; */
       this.account = accountsOnLoad[0].substring(0, 4) + "..." + accountsOnLoad[0].substring(accountsOnLoad[0].length - 4);
       this.isConnect = true;
     }
