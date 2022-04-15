@@ -23,9 +23,9 @@ export class SmartContractComponent implements OnInit {
   wallet: any;
   signer: any;
   provider: any;
-  //addressesContract = "";   //this is for polygon
+  addressesContract = "0xb6041EAe62C4591458AF480679c6A497EDA6CfcD";   //this is for polygon
 
-  addressesContract = "0x44440269027e73f1a87c07544fcec8787174f6bf";  //this is for mumbai
+  //addressesContract = "0x44440269027e73f1a87c07544fcec8787174f6bf";  //this is for mumbai
 
 
   ctaContract: any;
@@ -35,29 +35,31 @@ export class SmartContractComponent implements OnInit {
   balance: any;
 
   spinner = false;
-  /* promotionCard = new Map<string, string>([
-    ["0", "61"],
-    ["1", "153"],
-    ["2", "304"]
-  ]) */
   promotionCard = new Map<string, string>([
+    ["0", "73"],
+    ["1", "182"],
+    ["2", "365"]
+  ])
+  /* promotionCard = new Map<string, string>([
     ["0", '0.5'],
     ["1", '0.5'],
     ["2", '0.5']
-  ])
+  ]) */
 
   constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi: LambdaApiService) {
   }
 
   async ngOnInit() {
-    if(!this.checkTime()){
-      this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')}
+    if (!this.checkTime()) {
+      this.showAlertClosedSale('Sale is about to open as soon as airdrop is finished')
+    }//Next sale will open soon. Please check our social media for announcement!
+
     this.wallet = this.winref.window.ethereum;
     this.provider = new ethers.providers.Web3Provider(this.wallet);
-    this.connectMumbai();
+
     //this.connectPolygon()
-    this.connectWallet();
-    this.loadData();
+    //this.connectWallet();
+    //this.loadData();
 
 
 
@@ -73,15 +75,13 @@ export class SmartContractComponent implements OnInit {
       if (this.wallet) {
         this.signer = this.provider.getSigner();
         let chainId = await this.signer.getChainId();
-        if (chainId !== 80001    /*137*/) {
-          //this.alertError("Please change your network to polygon");
-          this.alertError("Please change your network to mumbai");
+        if (chainId !== 137) {
+          this.alertError("Please change your network to polygon");
         }
         else {
           let userAddress = await this.signer.getAddress()
           //check if is the date for minting 
           let mintingDay = this.checkTime();
-          //let mintingDay =true
           if (mintingDay) {
             try {
               //Set the smart contract
@@ -90,7 +90,7 @@ export class SmartContractComponent implements OnInit {
               this.sendMessage(userAddress).subscribe(async (res) => {
                 //Check if user is on whitelist
                 let response = JSON.parse(JSON.stringify(res))
-                if (response.body != 'null') {
+                if (response.body != 'null' || response.body != null) {
                   try {
                     this.mintNft = (await this.ctaContract.createPack(Number(typeOfCard), response.body, { value: ethers.utils.parseEther(this.promotionCard.get(typeOfCard)!) }));
                     this.spinner = true;
@@ -101,8 +101,7 @@ export class SmartContractComponent implements OnInit {
                     let transactionHash = event.transactionHash;
                     this.spinner = false
                     this.hideSpinner()
-                    //let url = "https://polygonscan.com/tx/" + transactionHash; //For polygon
-                    let url = "https://mumbai.polygonscan.com/tx/" + transactionHash; //For mumbai
+                    let url = "https://polygonscan.com/tx/" + transactionHash; //For polygon
                     Swal.fire({
                       title: 'NFT minted!',
                       html: '<a target="bank" href="' + url + '">Click here to see details of NFT here</a>',
@@ -111,12 +110,13 @@ export class SmartContractComponent implements OnInit {
                     })
                   }
                   catch (error: any) {
+                    console.log("error", error);
                     //catch error from metamask and see if user have enough fund to mint or user have already minted a package
                     if (typeof error === 'object' && error["data"]["message"].includes('insufficient funds for gas')) {
                       this.alertError("Your Matic balance is insufficient to operate transaction");
                     }
                     else if (typeof error === 'object' && error["data"]["message"].includes('has already minted')) {
-                      this.alertError('Address has already bought a pack');
+                      this.alertError('Address has already been used');
                     }
                     else if (typeof error === 'object' && error["data"]["message"].includes('nvalid package type')) {
                       this.alertError('Invalid package type');
@@ -136,6 +136,7 @@ export class SmartContractComponent implements OnInit {
                 } else {
                   this.alertError("Your wallet address is not whitelisted");
                 }
+
               })
             }
             catch (error: any) {
@@ -150,7 +151,6 @@ export class SmartContractComponent implements OnInit {
       else {
         this.alertError("Please Install metamask");
       }
-
     }
     catch (error) {
       this.alertError("Open pending request on metamask");
@@ -194,11 +194,10 @@ export class SmartContractComponent implements OnInit {
   //check time
   checkTime(): boolean {
     let today = new Date();
-
     let check = false;
     //friday is a minting day [17]
     if (today.getDay() == 5) {
-      if (today.getHours() >= 17 && (today.getHours() <= 23 && today.getMinutes() <= 59)) {
+      if (today.getHours() >= 19 && (today.getHours() <= 23 && today.getMinutes() <= 59)) {
         check = true;
       } else { check = false }
     }
@@ -216,22 +215,6 @@ export class SmartContractComponent implements OnInit {
       check = false;
     }
     return check;
- 
-
-    /* if (today.getDay() == 5) {
-      if (today.getHours() >= 10 && (today.getHours() <= 23 && today.getMinutes() < 59)) {
-        check = false;
-      } else { check = true }
-    }
-    else if (today.getDay() == 6) {
-      if (today.getHours() >= 0 && (today.getHours() < 9 && today.getMinutes() < 59)) {
-        check = false;
-      } else { check = true }
-    }
-    else {
-      check = true;
-    }
-    return check */
   }
 
   //Display spinner during the creation of nft
@@ -245,7 +228,7 @@ export class SmartContractComponent implements OnInit {
 
   async connectWallet() {
     if (this.wallet) {
-      this.connectMumbai();
+      this.connectPolygon();
 
       let accounts = await this.wallet.request({ method: 'eth_requestAccounts' });
       let connectAccount = accounts[0];

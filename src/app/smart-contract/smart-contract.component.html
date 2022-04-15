@@ -8,7 +8,7 @@
       <button disabled="true" style="padding: 0.5em;" class="btn btn-dark text-right text-white">{{account}}</button>
     </div>
     <div *ngIf="!isConnect" class="col-9 col-lg-5  mt-3 text-center">
-      <button  (click)="connectWallet()" style="padding: 0.5em;" class="btn btn-dark text-right text-white">Connect Wallet</button>  
+      <button [disabled]="true"  (click)="connectWallet()" style="padding: 0.5em;" class="btn btn-dark text-right text-white">Connect Wallet</button>  
     </div>
     
   </div>
@@ -26,7 +26,6 @@
                   Limited Edition  <br> <br> 
                    <span  class="text-center text-white">Price: {{promotionCard.get('0')}} MATIC</span>
                 </p>
-                <!-- <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-danger" style="outline: none !important;box-shadow: none;">Mint this package</button> -->
 
                 <button *ngIf="!checkTime()" [disabled]="true" type="button"  class="btn btn-danger" style="outline: none !important;box-shadow: none;">Mint this package</button> 
                <button *ngIf="checkTime()"  type="button" (click)="smartContract(c.activeId)" class="btn btn-danger" style="outline: none !important;box-shadow: none;">Mint this package</button>
@@ -47,7 +46,6 @@
                 Limited Edition<br> <br> 
                 <span  class="text-center text-white">Price: {{promotionCard.get('1')}} MATIC</span>
             </p>   
-            <!-- <button   type="button" (click)="smartContract(c.activeId)" class="btn btn-success" style="outline: none !important;box-shadow: none;">Mint this package</button> -->
  
              <button *ngIf="!checkTime()"  [disabled]="true" type="button"  class="btn btn-success" style="outline: none !important;box-shadow: none;">Mint this package</button> 
             <button  *ngIf="checkTime()"   type="button" (click)="smartContract(c.activeId)" class="btn btn-success" style="outline: none !important;box-shadow: none;">Mint this package</button>
@@ -69,7 +67,6 @@
               Limited Edition<br> <br> 
               <span  class="text-center text-white">Price: {{promotionCard.get('2')}} MATIC</span>
           </p> 
-          <!-- <button  type="button" (click)="smartContract(c.activeId)" class="btn btn-primary" style="outline: none !important;box-shadow: none;">Mint this package</button> -->
 
           <button *ngIf="!checkTime()" [disabled]="true"  type="button" class="btn btn-primary" style="outline: none !important;box-shadow: none;">Mint this package</button> 
           <button *ngIf="checkTime()"  type="button" (click)="smartContract(c.activeId)" class="btn btn-primary" style="outline: none !important;box-shadow: none;">Mint this package</button>
