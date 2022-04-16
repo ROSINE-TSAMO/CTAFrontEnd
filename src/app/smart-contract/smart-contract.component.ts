@@ -196,7 +196,7 @@ export class SmartContractComponent implements OnInit {
     }
     //Monday is  minting day
     else if (today.getDay() == 1) {
-      if (today.getHours() >= 0 && (today.getHours() <= 16 && today.getMinutes() <= 59)) {
+      if (today.getHours() >= 0 && (today.getHours() <= 17 && today.getMinutes() <= 59)) {
         check = true;
       } else { check = false }
     }
