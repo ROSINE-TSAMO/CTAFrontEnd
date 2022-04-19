@@ -58,11 +58,6 @@ export class SmartContractComponent implements OnInit {
        this.disableConnect = false
     }
 
-
-    
-
-   
-
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {
       this.openModal();
@@ -195,7 +190,7 @@ export class SmartContractComponent implements OnInit {
     let check = false;
     //friday is a minting day [17]
     if (today.getDay() == 5) {
-      if (today.getHours() >= 17 && (today.getHours() <= 23 && today.getMinutes() <= 59)) {
+      if (today.getHours() >= 18 && (today.getHours() <= 23 && today.getMinutes() <= 59)) {
         check = true;
       } else { check = false }
     }
