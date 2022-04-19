@@ -28,6 +28,7 @@ export class SmartContractComponent implements OnInit {
   ctaContract: any;
   mintNft: any;
   isConnect = false
+  disableConnect:any;
   account: any;
   balance: any;
 
@@ -43,16 +44,24 @@ export class SmartContractComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (!this.checkTime()) {
-      this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!')
-    }
-
     this.wallet = this.winref.window.ethereum;
     this.provider = new ethers.providers.Web3Provider(this.wallet);
 
-    this.connectPolygon()
-    this.connectWallet();
-    this.loadData();
+    if (!this.checkTime()) {
+      this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!');
+      this.disableConnect = true
+    }
+    else{
+       this.connectPolygon()
+       this.connectWallet();
+       this.loadData();
+       this.disableConnect = false
+    }
+
+
+    
+
+   
 
     //if variable localStorage is null, call the modal windows 
     if (localStorage.getItem('terminiCondizioni') == null) {

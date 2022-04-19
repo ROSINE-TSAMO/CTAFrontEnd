@@ -8,7 +8,7 @@
       <button disabled="true" style="padding: 0.5em;" class="btn btn-dark text-right text-white">{{account}}</button>
     </div>
     <div *ngIf="!isConnect" class="col-9 col-lg-5  mt-3 text-center">
-      <button   (click)="connectWallet()" style="padding: 0.5em;" class="btn btn-dark text-right text-white">Connect Wallet</button>  
+      <button  [disabled]="disableConnect" (click)="connectWallet()" style="padding: 0.5em;" class="btn btn-dark text-right text-white">Connect Wallet</button>  
     </div>
     
   </div>
