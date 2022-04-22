@@ -28,7 +28,7 @@ export class SmartContractComponent implements OnInit {
   ctaContract: any;
   mintNft: any;
   isConnect = false
-  disableConnect:any;
+  disableConnect: any;
   account: any;
   balance: any;
 
@@ -51,11 +51,11 @@ export class SmartContractComponent implements OnInit {
       this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!');
       this.disableConnect = true
     }
-    else{
-       this.connectPolygon()
-       this.connectWallet();
-       this.loadData();
-       this.disableConnect = false
+    else {
+      this.connectPolygon()
+      this.connectWallet();
+      this.loadData();
+      this.disableConnect = false
     }
 
     //if variable localStorage is null, call the modal windows 
@@ -188,11 +188,17 @@ export class SmartContractComponent implements OnInit {
   checkTime(): boolean {
     let today = new Date();
     let check = false;
-    //friday is a minting day [17]
+    //friday is a minting day:Opensale at 16:55
     if (today.getDay() == 5) {
-      if (today.getHours() >= 18 && (today.getHours() <= 23 && today.getMinutes() <= 59)) {
+
+      if (today.getHours() <= 15 && today.getMinutes() <= 59) {
+        check = false;
+      }
+      else if (today.getHours() == 16 && (today.getMinutes() >= 0 && today.getMinutes() <= 54)) {
+        check = false
+      }
+      else
         check = true;
-      } else { check = false }
     }
     //saturday and sunday are  minting day
     else if (today.getDay() == 6 || today.getDay() == 0) {
@@ -200,7 +206,7 @@ export class SmartContractComponent implements OnInit {
     }
     //Monday is  minting day
     else if (today.getDay() == 1) {
-      if (today.getHours() >= 0 && (today.getHours() <= 17 && today.getMinutes() <= 59)) {
+      if (today.getHours() >= 0 && (today.getHours() <= 16 && today.getMinutes() <= 59)) {
         check = true;
       } else { check = false }
     }
