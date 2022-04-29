@@ -23,7 +23,7 @@ export class SmartContractComponent implements OnInit {
   wallet: any;
   signer: any;
   provider: any;
-  addressesContract = "0xb6041EAe62C4591458AF480679c6A497EDA6CfcD";   //this is for polyg
+  addressesContract = "0xb6041EAe62C4591458AF480679c6A497EDA6CfcD";   //this is for polygon
 
   ctaContract: any;
   mintNft: any;
