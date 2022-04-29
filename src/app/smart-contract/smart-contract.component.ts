@@ -79,7 +79,7 @@ export class SmartContractComponent implements OnInit {
           let mintingDay = this.checkTime();
           if (mintingDay) {
             try {
-              //Set the smart contract
+              //Set the smart contract //
               this.ctaContract = new ethers.Contract(this.addressesContract, Contract.abi, this.signer);
 
               this.sendMessage(userAddress).subscribe(async (res) => {
