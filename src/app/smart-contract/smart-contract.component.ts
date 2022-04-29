@@ -58,7 +58,7 @@ export class SmartContractComponent implements OnInit {
       this.disableConnect = false
     }
 
-    //if variable localStorage is null, call the modal windows 
+    //if variable localStorage is null
     if (localStorage.getItem('terminiCondizioni') == null) {
       this.openModal();
     }
