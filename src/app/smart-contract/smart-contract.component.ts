@@ -49,6 +49,9 @@ export class SmartContractComponent implements OnInit {
     this.provider = new ethers.providers.Web3Provider(this.wallet);
     this.setUpAnalytics()
 
+    /**Google analytics */
+    this.googleAnalyticsService.eventEmitter("Mint", "User click on Minting", "package", "click", 10);
+
     if (!this.checkTime()) {
       this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!');
       this.disableConnect = true
@@ -97,9 +100,7 @@ export class SmartContractComponent implements OnInit {
                     let event = tx.events[0];
                     let transactionHash = event.transactionHash;
                     this.spinner = false
-                    this.hideSpinner()
-                    /**Google analytics */
-                    this.googleAnalyticsService.eventEmitter("Mint", "package", "cart", "click", 10);
+                    this.hideSpinner() 
                     let url = "https://polygonscan.com/tx/" + transactionHash; //For polygon
                     Swal.fire({
                       title: 'NFT minted!',
