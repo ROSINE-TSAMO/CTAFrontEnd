@@ -46,11 +46,6 @@ export class SmartContractComponent implements OnInit {
   async ngOnInit() {
     this.wallet = this.winref.window.ethereum;
     this.provider = new ethers.providers.Web3Provider(this.wallet);
-
-
-    /**Google analytics */
-    //this.googleAnalyticsService.eventEmitter("Mint", "User click on Minting", "package", "click", 10);
-
     if (!this.checkTime()) {
       this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!');
       this.disableConnect = true
