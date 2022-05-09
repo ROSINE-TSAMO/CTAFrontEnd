@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import Swal from 'sweetalert2';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {GoogleAnalyticsService} from './services/google-analytics.service';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,9 +29,10 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     FontAwesomeModule,
     BrowserAnimationsModule,
     NgxSpinnerModule
+    
 
   ],
-  providers: [WinRefService],
+  providers: [WinRefService,GoogleAnalyticsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
