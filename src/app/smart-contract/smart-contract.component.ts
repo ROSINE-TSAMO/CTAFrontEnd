@@ -9,9 +9,8 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { connect } from 'http2';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
-import { Router, NavigationEnd } from '@angular/router';
 
-declare let gtag: Function;
+
 @Component({
   selector: 'app-smart-contract',
   templateUrl: './smart-contract.component.html',
@@ -42,15 +41,15 @@ export class SmartContractComponent implements OnInit {
   ])
 
 
-  constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi: LambdaApiService, private googleAnalyticsService: GoogleAnalyticsService, private router: Router) { }
+  constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi: LambdaApiService) { }
 
   async ngOnInit() {
     this.wallet = this.winref.window.ethereum;
     this.provider = new ethers.providers.Web3Provider(this.wallet);
-    this.setUpAnalytics()
+
 
     /**Google analytics */
-    this.googleAnalyticsService.eventEmitter("Mint", "User click on Minting", "package", "click", 10);
+    //this.googleAnalyticsService.eventEmitter("Mint", "User click on Minting", "package", "click", 10);
 
     if (!this.checkTime()) {
       this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!');
@@ -100,7 +99,7 @@ export class SmartContractComponent implements OnInit {
                     let event = tx.events[0];
                     let transactionHash = event.transactionHash;
                     this.spinner = false
-                    this.hideSpinner() 
+                    this.hideSpinner()
                     let url = "https://polygonscan.com/tx/" + transactionHash; //For polygon
                     Swal.fire({
                       title: 'NFT minted!',
@@ -308,18 +307,6 @@ export class SmartContractComponent implements OnInit {
       //this.alertError("Problem to add mumbai on Metamask, try later")
     }
   }
-  //This is for google analytics
-  setUpAnalytics() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        gtag('config',  'UA-228269918-2',
-          {
-            'page_path': event.urlAfterRedirects
-          }
-        );
-      }
-    }
-    )
-  }
+
 }
 

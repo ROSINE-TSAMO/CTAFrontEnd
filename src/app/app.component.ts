@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { filter } from 'rxjs/operators';
+import { Router, NavigationEnd } from '@angular/router';
+
+declare let gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -7,4 +11,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'CrossTheAges';
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        gtag('config', 'UA-228269918-2',
+          {
+            'page_path': event.urlAfterRedirects
+          }
+        );
+      }
+    }
+    )
+  }
+
+
+
+
 }
