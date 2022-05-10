@@ -10,7 +10,7 @@ declare let gtag: Function;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'CrossTheAges';
+  title = 'Presales| Cross The Ages';
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
