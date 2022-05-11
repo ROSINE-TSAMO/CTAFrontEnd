@@ -45,7 +45,7 @@ export class SmartContractComponent implements OnInit {
 
   async ngOnInit() {
     this.wallet = this.winref.window.ethereum;
-    this.provider = new ethers.providers.Web3Provider(this.wallet);
+    
     if (!this.checkTime()) {
       this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!');
       this.disableConnect = true
@@ -67,6 +67,7 @@ export class SmartContractComponent implements OnInit {
   async smartContract(typeOfCard: any) {
     try {
       if (this.wallet) {
+        this.provider = new ethers.providers.Web3Provider(this.wallet);
         this.signer = this.provider.getSigner();
         let chainId = await this.signer.getChainId();
         if (chainId !== 137) {
@@ -234,12 +235,9 @@ export class SmartContractComponent implements OnInit {
       this.isConnect = true;
     }
   }
-  async getBalance() {
-    let [account] = await this.wallet.request({ method: 'eth_requestAccounts' });
-    let balance = await this.provider.getBalance(account);
-    return balance;
-  }
+  
   async loadData() {
+    this.provider = new ethers.providers.Web3Provider(this.wallet);
 
     let accountsOnLoad = await this.provider.listAccounts();
     if (accountsOnLoad.length !== 0) {
