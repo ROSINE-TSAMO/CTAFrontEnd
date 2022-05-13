@@ -35,10 +35,10 @@ export class SmartContractComponent implements OnInit {
 
   spinner = false;
   promotionCard = new Map<string, string>([
-    ["0", "95"],
-    ["1", "236"],
-    ["2", "472"]
-  ])
+    ["0", "143"],
+    ["1", "358"],
+    ["2", "716"]
+  ]);
 
 
   constructor(private winref: WinRefService, private modalService: NgbModal, private spinnerService: NgxSpinnerService, private lambdaApi: LambdaApiService) { }
