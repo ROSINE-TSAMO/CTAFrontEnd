@@ -35,9 +35,9 @@ export class SmartContractComponent implements OnInit {
 
   spinner = false;
   promotionCard = new Map<string, string>([
-    ["0", "143"],
-    ["1", "358"],
-    ["2", "716"]
+    ["0", "152"],
+    ["1", "379"],
+    ["2", "758"]
   ]);
 
 
@@ -45,7 +45,7 @@ export class SmartContractComponent implements OnInit {
 
   async ngOnInit() {
     this.wallet = this.winref.window.ethereum;
-    
+
     if (!this.checkTime()) {
       this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!');
       this.disableConnect = true
@@ -191,12 +191,12 @@ export class SmartContractComponent implements OnInit {
     //friday is a minting day:Opensale at 16:55
     if (today.getDay() == 5) {
 
-      if (today.getHours() <= 15 && today.getMinutes() <= 59) {
+      if (today.getHours() <= 16 && today.getMinutes() <= 59) {
         check = false;
       }
-      else if (today.getHours() == 16 && (today.getMinutes() >= 0 && today.getMinutes() <= 54)) {
+      /*else if (today.getHours() == 16 && (today.getMinutes() >= 0 && today.getMinutes() <= 54)) {
         check = false
-      }
+      }*/
       else
         check = true;
     }
@@ -235,7 +235,7 @@ export class SmartContractComponent implements OnInit {
       this.isConnect = true;
     }
   }
-  
+
   async loadData() {
     this.provider = new ethers.providers.Web3Provider(this.wallet);
 
