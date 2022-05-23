@@ -188,7 +188,7 @@ export class SmartContractComponent implements OnInit {
   checkTime(): boolean {
     let today = new Date();
     let check = false;
-    //friday is a minting day:Opensale at 16:55
+    //friday is a minting day:Opensale at 17:00
     if (today.getDay() == 5) {
 
       if (today.getHours() <= 16 && today.getMinutes() <= 59) {
