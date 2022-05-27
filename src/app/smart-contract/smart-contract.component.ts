@@ -262,7 +262,7 @@ export class SmartContractComponent implements OnInit {
         blockExplorerUrls: ["https://polygonscan.com/"]
       }
     }
-    //if polygon is not installed, then open metamask window to add polygon network  
+    //if polygon is not installed, then open metamask window to add polygon network  to the wallet
     try {
       await this.wallet.request({
         method: "wallet_addEthereumChain",
