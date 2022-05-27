@@ -194,9 +194,9 @@ export class SmartContractComponent implements OnInit {
       if (today.getHours() <= 16 && today.getMinutes() <= 59) {
         check = false;
       }
-      /*else if (today.getHours() == 16 && (today.getMinutes() >= 0 && today.getMinutes() <= 54)) {
+      /*else if (today.getHours() == 16 && (today.getMinutes() >= 0 && today.getMinutes() <= 54)) 
         check = false
-      }*/
+      */
       else
         check = true;
     }
