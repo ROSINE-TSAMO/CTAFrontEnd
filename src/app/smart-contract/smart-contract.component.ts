@@ -35,9 +35,9 @@ export class SmartContractComponent implements OnInit {
 
   spinner = false;
   promotionCard = new Map<string, string>([
-    ["0", "171"],
-    ["1", "427"],
-    ["2", "854"]
+    ["0", "167"],
+    ["1", "417"],
+    ["2", "833"]
   ]);
 
 
