@@ -47,7 +47,7 @@ export class SmartContractComponent implements OnInit {
     this.wallet = this.winref.window.ethereum;
 
     if (!this.checkTime()) {
-      this.showAlertClosedSale('Next sale will open soon. Please check our social media for announcement!');
+      this.showAlertClosedSale('Check our social media for updates.');
       this.disableConnect = true
     }
     else {
@@ -166,7 +166,7 @@ export class SmartContractComponent implements OnInit {
 
   showAlertClosedSale(msg: any) {
     Swal.fire({
-      title: "<i  class='fa-light fa-face-pensive'></i> SALE WILL OPEN SOON",
+      title: "<i  class='fa-light fa-face-pensive'></i> PRESALE FINISHED",
       text: msg,
       heightAuto: false,
       showConfirmButton: false,
