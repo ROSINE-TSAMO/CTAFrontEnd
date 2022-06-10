@@ -188,15 +188,13 @@ export class SmartContractComponent implements OnInit {
   checkTime(): boolean {
     let today = new Date();
     let check = false;
-    //friday is a minting day:Opensale at 17:00
+    /* //friday is a minting day:Opensale at 17:00
     if (today.getDay() == 5) {
 
       if (today.getHours() <= 16 && today.getMinutes() <= 59) {
         check = false;
       }
-      /*else if (today.getHours() == 16 && (today.getMinutes() >= 0 && today.getMinutes() <= 54)) 
-        check = false
-      */
+     
       else
         check = true;
     }
@@ -212,7 +210,7 @@ export class SmartContractComponent implements OnInit {
     }
     else {
       check = false;
-    }
+    } */
     return check;
   }
 
